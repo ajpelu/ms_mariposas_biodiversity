@@ -1,0 +1,25 @@
+---
+title: "Prepara los ambientales"
+author: "Antonio J. Pérez-Luque"
+date: "2021-12-28"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE
+)
+```
+
+```{r pkg}
+library(tidyverse)
+library(readxl)
+library(xlsx)
+library(here)
+```
+
+
