@@ -1,0 +1,160 @@
+---
+title: "Plot varibles *vs* Elevation"
+author: "Antonio J. Pérez-Luque"
+date: "2021-12-29"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE
+)
+```
+
+
+## Objetivo
+
+- Crear un plot de variación de los parámetros con la elevación  
+
+```{r pkg}
+library(tidyverse)
+library(here)
+library(ggpubr)
+library(ggrepel)
+```
+
+- Read data
+
+```{r read-data}
+denraw <- read_csv(here::here("data/densidad_by_year.csv")) 
+divraw <- read_csv(here::here("data/diversidad_by_year.csv")) 
+riqraw <- read_csv(here::here("data/riqueza_by_year.csv"))
+```
+
+### Plot Densidad 
+```{r plot-densidad}
+densidad_avg <- denraw %>%
+  group_by(transecto, site, elev) %>%
+  summarise(mean = mean(den, na.rm = TRUE),
+            sd = sd(den, na.rm = TRUE),
+            se = sd/sqrt(n()))
+
+plot_density <- densidad_avg %>%
+  ggplot(aes(x=elev, y = mean, label=site)) +
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), colour="gray", alpha=.3) +
+  # geom_smooth(method="loess", span=.5) +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se)) +
+  geom_point(size=2, shape=21, fill="white") +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank()
+  ) +
+  ylab("Abundance (n ind / 100 m)") +
+  xlab("Elevation") +
+  geom_text_repel()
+
+plot_density
+```
+
+### Plot Diversidad 
+
+```{r plot-diversidad}
+diversidad_avg <- divraw %>%
+  group_by(transecto, site, elev) %>%
+  summarise(mean = mean(diversidad, na.rm = TRUE),
+            sd = sd(diversidad, na.rm = TRUE),
+            se = sd/sqrt(n()))
+
+plot_diversity <- diversidad_avg %>%
+  ggplot(aes(x=elev, y = mean, label = site)) +
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), colour="gray", alpha=.3) +
+  # geom_smooth() +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se)) +
+  geom_point(size=2, shape=21, fill="white") +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank()
+  ) +
+  ylab("Diversity (Shannon index)") +
+  xlab("Elevation") +
+  geom_text_repel()
+
+plot_diversity
+```
+
+### Plot Riqueza 
+
+```{r plot-riqueza}
+richness_avg <- riqraw %>%
+  group_by(transecto, site, elev) %>%
+  summarise(mean = mean(riq, na.rm = TRUE),
+            sd = sd(riq, na.rm = TRUE),
+            se = sd/sqrt(n()))
+
+plot_richness <- richness_avg %>%
+  ggplot(aes(x=elev, y = mean, label = site)) +
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), colour="gray", alpha=.3) +
+  # geom_smooth() +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se)) +
+  geom_point(size=2, shape=21, fill="white") +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank()
+  ) +
+  ylab("Richness (species number") +
+  xlab("Elevation") +
+  geom_text_repel()
+
+plot_richness
+```
+
+### Todas las variables juntas 
+```{r plot-all}
+p <- bind_rows(
+  richness_avg %>% mutate(variable = "riq"),
+  diversidad_avg %>% mutate(variable = "div"),
+  densidad_avg %>% mutate(variable = "den"))
+  
+  
+mylabel <- c(
+  den = "Abundance (n ind / 100 m)",
+  div = "Diversity (Shannon index)",
+  riq = "Richness (species number)")
+
+
+plot_variables <- p %>%
+  ggplot(aes(x=elev, y = mean, label = site)) +
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), colour="gray", alpha=.3) +
+  # geom_smooth() +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se)) +
+  geom_point(size=2, shape=21, fill="white") +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    strip.text = element_text(face = "bold"),
+    strip.background = element_rect(fill="white")
+  ) + geom_text_repel() + 
+  facet_wrap(~variable, ncol=1, scales = "free_y",
+             labeller = labeller(variable = mylabel),
+             strip.position="top") + 
+  xlab("Elevation") + ylab("") 
+```
+
+```{r export-plot, fig.height=7.5, fig.width=5}
+ggsave(here::here("figs/plot_variables_elevation.pdf"),
+       device = "pdf",
+       width = 5, height = 7.5)
+plot_variables
+dev.off()
+
+
+ggsave(plot= plot_variables,
+       here::here("figs/plot_variables_elevation.png"),
+       device = "png",
+       dpi = 300,
+       width = 5, height = 7.5)
+```
+
+
