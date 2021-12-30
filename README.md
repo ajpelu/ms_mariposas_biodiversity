@@ -1,5 +1,4 @@
-# ms_mariposas_biodiversity
+# Biodiversity analysis of Lepidotera in Sierra Nevada
 
-A [workflowr][] project.
+This repository contains the analysis for the preparation of the manuscript entitled: *Butterfly diversity, richness and abundance patterns in Sierra Nevada (SE Spain): conservation implications under a global change scenario*
 
-[workflowr]: https://github.com/workflowr/workflowr
