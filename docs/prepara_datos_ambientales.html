@@ -11,9 +11,9 @@
 
 <meta name="author" content="Antonio J. Pérez-Luque" />
 
-<meta name="date" content="2021-12-29" />
+<meta name="date" content="2021-12-28" />
 
-<title>Plot varibles vs Elevation (All years)</title>
+<title>Prepara los ambientales</title>
 
 <script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -358,9 +358,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Plot varibles <em>vs</em> Elevation (All years)</h1>
+<h1 class="title toc-ignore">Prepara los ambientales</h1>
 <h4 class="author">Antonio J. Pérez-Luque</h4>
-<h4 class="date">2021-12-29</h4>
+<h4 class="date">2021-12-28</h4>
 
 </div>
 
@@ -499,6 +499,9 @@ Untracked files:
     Untracked:  analysis/prepara_datos_mariposas_all_years.Rmd
     Untracked:  data/Tabla_variables_modelización_lepidópteros_ACTUALIZADO_2020.xlsx
 
+Unstaged changes:
+    Modified:   figs/plot_variables_elevation_allyears.pdf
+
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
@@ -512,7 +515,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/plot_variables_elevation_all_years.Rmd</code>) and HTML (<code>docs/plot_variables_elevation_all_years.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/prepara_datos_ambientales.Rmd</code>) and HTML (<code>docs/prepara_datos_ambientales.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -538,27 +541,10 @@ Message
 <tbody>
 <tr>
 <td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_biodiversity/381293c8db3f795dabc025d1911bf0486216ad16/docs/plot_variables_elevation_all_years.html" target="_blank">381293c</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2021-12-30
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
 Rmd
 </td>
 <td>
-<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/ce195a20d7e4f775840c451ec2fa6024081572a4/analysis/plot_variables_elevation_all_years.Rmd" target="_blank">ce195a2</a>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/8276245f9d08ba3560c651916309caf336d74ea4/analysis/prepara_datos_ambientales.Rmd" target="_blank">8276245</a>
 </td>
 <td>
 ajpelu
@@ -567,7 +553,7 @@ ajpelu
 2021-12-30
 </td>
 <td>
-nueva peticion de JMBA. Variables para todo el periodo
+update
 </td>
 </tr>
 </tbody>
@@ -577,287 +563,12 @@ nueva peticion de JMBA. Variables para todo el periodo
 </div>
 </div>
 </div>
-<div id="objetivo" class="section level2">
-<h2>Objetivo</h2>
-<ul>
-<li>Crear un plot de variación de los parámetros con la elevación</li>
-</ul>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
 <pre class="r"><code>library(tidyverse)
-library(here)
-library(ggpubr)
-library(ggrepel)</code></pre>
-<ul>
-<li>Read data</li>
-</ul>
-<pre class="r"><code>denraw &lt;- read_csv(here::here(&quot;data/densidad_by_year_alldata.csv&quot;)) 
-divraw &lt;- read_csv(here::here(&quot;data/diversidad_by_year_alldata.csv&quot;)) 
-riqraw &lt;- read_csv(here::here(&quot;data/riqueza_by_year_alldata.csv&quot;))</code></pre>
-<div id="plot-densidad" class="section level3">
-<h3>Plot Densidad</h3>
-<pre class="r"><code>densidad_avg &lt;- denraw %&gt;%
-  group_by(transecto, site, elev) %&gt;%
-  summarise(mean = mean(den, na.rm = TRUE),
-            sd = sd(den, na.rm = TRUE),
-            se = sd/sqrt(n()))
-
-plot_density &lt;- densidad_avg %&gt;%
-  ggplot(aes(x=elev, y = mean, label=site)) +
-  geom_smooth(method = &quot;gam&quot;, formula = y ~ s(x, bs = &quot;cs&quot;), colour=&quot;gray&quot;, alpha=.3) +
-  # geom_smooth(method=&quot;loess&quot;, span=.5) +
-  geom_errorbar(aes(ymin = mean - se, ymax = mean + se)) +
-  geom_point(size=2, shape=21, fill=&quot;white&quot;) +
-  theme_bw() +
-  theme(
-    panel.grid = element_blank()
-  ) +
-  ylab(&quot;Abundance (n ind / 100 m)&quot;) +
-  xlab(&quot;Elevation&quot;) +
-  geom_text_repel()
-
-plot_density</code></pre>
-<p><img src="figure/plot_variables_elevation_all_years.Rmd/plot-densidad-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-densidad-1">
-Past versions of plot-densidad-1.png
-</button>
-</p>
-<div id="fig-plot-densidad-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/381293c8db3f795dabc025d1911bf0486216ad16/docs/figure/plot_variables_elevation_all_years.Rmd/plot-densidad-1.png" target="_blank">381293c</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2021-12-30
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="plot-diversidad" class="section level3">
-<h3>Plot Diversidad</h3>
-<pre class="r"><code>diversidad_avg &lt;- divraw %&gt;%
-  group_by(transecto, site, elev) %&gt;%
-  summarise(mean = mean(diversidad, na.rm = TRUE),
-            sd = sd(diversidad, na.rm = TRUE),
-            se = sd/sqrt(n()))
-
-plot_diversity &lt;- diversidad_avg %&gt;%
-  ggplot(aes(x=elev, y = mean, label = site)) +
-  geom_smooth(method = &quot;gam&quot;, formula = y ~ s(x, bs = &quot;cs&quot;), colour=&quot;gray&quot;, alpha=.3) +
-  # geom_smooth() +
-  geom_errorbar(aes(ymin = mean - se, ymax = mean + se)) +
-  geom_point(size=2, shape=21, fill=&quot;white&quot;) +
-  theme_bw() +
-  theme(
-    panel.grid = element_blank()
-  ) +
-  ylab(&quot;Diversity (Shannon index)&quot;) +
-  xlab(&quot;Elevation&quot;) +
-  geom_text_repel()
-
-plot_diversity</code></pre>
-<p><img src="figure/plot_variables_elevation_all_years.Rmd/plot-diversidad-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-diversidad-1">
-Past versions of plot-diversidad-1.png
-</button>
-</p>
-<div id="fig-plot-diversidad-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/381293c8db3f795dabc025d1911bf0486216ad16/docs/figure/plot_variables_elevation_all_years.Rmd/plot-diversidad-1.png" target="_blank">381293c</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2021-12-30
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="plot-riqueza" class="section level3">
-<h3>Plot Riqueza</h3>
-<pre class="r"><code>richness_avg &lt;- riqraw %&gt;%
-  group_by(transecto, site, elev) %&gt;%
-  summarise(mean = mean(riq, na.rm = TRUE),
-            sd = sd(riq, na.rm = TRUE),
-            se = sd/sqrt(n()))
-
-plot_richness &lt;- richness_avg %&gt;%
-  ggplot(aes(x=elev, y = mean, label = site)) +
-  geom_smooth(method = &quot;gam&quot;, formula = y ~ s(x, bs = &quot;cs&quot;), colour=&quot;gray&quot;, alpha=.3) +
-  # geom_smooth() +
-  geom_errorbar(aes(ymin = mean - se, ymax = mean + se)) +
-  geom_point(size=2, shape=21, fill=&quot;white&quot;) +
-  theme_bw() +
-  theme(
-    panel.grid = element_blank()
-  ) +
-  ylab(&quot;Richness (species number&quot;) +
-  xlab(&quot;Elevation&quot;) +
-  geom_text_repel()
-
-plot_richness</code></pre>
-<p><img src="figure/plot_variables_elevation_all_years.Rmd/plot-riqueza-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-riqueza-1">
-Past versions of plot-riqueza-1.png
-</button>
-</p>
-<div id="fig-plot-riqueza-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/381293c8db3f795dabc025d1911bf0486216ad16/docs/figure/plot_variables_elevation_all_years.Rmd/plot-riqueza-1.png" target="_blank">381293c</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2021-12-30
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="todas-las-variables-juntas" class="section level3">
-<h3>Todas las variables juntas</h3>
-<pre class="r"><code>p &lt;- bind_rows(
-  richness_avg %&gt;% mutate(variable = &quot;riq&quot;),
-  diversidad_avg %&gt;% mutate(variable = &quot;div&quot;),
-  densidad_avg %&gt;% mutate(variable = &quot;den&quot;))
-  
-  
-mylabel &lt;- c(
-  den = &quot;Abundance (n ind / 100 m)&quot;,
-  div = &quot;Diversity (Shannon index)&quot;,
-  riq = &quot;Richness (species number)&quot;)
-
-
-plot_variables &lt;- p %&gt;%
-  ggplot(aes(x=elev, y = mean, label = site)) +
-  geom_smooth(method = &quot;gam&quot;, formula = y ~ s(x, bs = &quot;cs&quot;), colour=&quot;blue&quot;, alpha=.1, fill=&quot;blue&quot;) +
-  # geom_smooth() +
-  geom_errorbar(aes(ymin = mean - se, ymax = mean + se)) +
-  geom_point(size=2, shape=21, fill=&quot;blue&quot;) +
-  theme_bw() +
-  theme(
-    panel.grid = element_blank(),
-    strip.text = element_text(face = &quot;bold&quot;),
-    strip.background = element_rect(fill=&quot;white&quot;)
-  ) + geom_text_repel() + 
-  facet_wrap(~variable, ncol=1, scales = &quot;free_y&quot;,
-             labeller = labeller(variable = mylabel),
-             strip.position=&quot;top&quot;) + 
-  xlab(&quot;Elevation&quot;) + ylab(&quot;&quot;) </code></pre>
-<pre class="r"><code>ggsave(here::here(&quot;figs/plot_variables_elevation_allyears.pdf&quot;),
-       device = &quot;pdf&quot;,
-       width = 5, height = 7.5)
-plot_variables</code></pre>
-<p><img src="figure/plot_variables_elevation_all_years.Rmd/export-plot-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-export-plot-1">
-Past versions of export-plot-1.png
-</button>
-</p>
-<div id="fig-export-plot-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/381293c8db3f795dabc025d1911bf0486216ad16/docs/figure/plot_variables_elevation_all_years.Rmd/export-plot-1.png" target="_blank">381293c</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2021-12-30
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>dev.off()</code></pre>
-<pre><code>null device 
-          1 </code></pre>
-<pre class="r"><code>ggsave(plot= plot_variables,
-       here::here(&quot;figs/plot_variables_elevation_allyears.png&quot;),
-       device = &quot;png&quot;,
-       dpi = 300,
-       width = 5, height = 7.5)</code></pre>
+library(readxl)
+library(xlsx)
+library(here)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -881,35 +592,29 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] ggrepel_0.9.1   ggpubr_0.4.0    here_1.0.1      forcats_0.5.1  
+ [1] here_1.0.1      xlsx_0.6.5      readxl_1.3.1    forcats_0.5.1  
  [5] stringr_1.4.0   dplyr_1.0.6     purrr_0.3.4     readr_1.4.0    
  [9] tidyr_1.1.3     tibble_3.1.2    ggplot2_3.3.5   tidyverse_1.3.1
 [13] workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-152      fs_1.5.0          lubridate_1.7.10  httr_1.4.2       
- [5] rprojroot_2.0.2   tools_4.0.2       backports_1.2.1   bslib_0.2.4      
- [9] utf8_1.1.4        R6_2.5.1          DBI_1.1.1         mgcv_1.8-33      
-[13] colorspace_2.0-2  withr_2.4.1       tidyselect_1.1.1  processx_3.5.1   
-[17] curl_4.3          compiler_4.0.2    git2r_0.28.0      textshaping_0.3.2
-[21] cli_2.5.0         rvest_1.0.0       xml2_1.3.2        labeling_0.4.2   
-[25] sass_0.3.1        scales_1.1.1.9000 callr_3.7.0       systemfonts_1.0.0
-[29] digest_0.6.27     foreign_0.8-81    rmarkdown_2.8     rio_0.5.16       
-[33] pkgconfig_2.0.3   htmltools_0.5.2   highr_0.8         dbplyr_2.1.1     
-[37] fastmap_1.1.0     rlang_0.4.12      readxl_1.3.1      rstudioapi_0.13  
-[41] farver_2.1.0      jquerylib_0.1.3   generics_0.1.0    jsonlite_1.7.2   
-[45] zip_2.1.1         car_3.0-10        magrittr_2.0.1    Matrix_1.3-2     
-[49] Rcpp_1.0.7        munsell_0.5.0     fansi_0.4.2       abind_1.4-5      
-[53] lifecycle_1.0.1   stringi_1.7.4     whisker_0.4       yaml_2.2.1       
-[57] carData_3.0-4     grid_4.0.2        promises_1.2.0.1  crayon_1.4.1     
-[61] lattice_0.20-41   haven_2.3.1       splines_4.0.2     hms_1.0.0        
-[65] knitr_1.31        ps_1.5.0          pillar_1.6.1      ggsignif_0.6.0   
-[69] reprex_2.0.0      glue_1.4.2        evaluate_0.14     getPass_0.2-2    
-[73] data.table_1.14.0 modelr_0.1.8      vctrs_0.3.8       httpuv_1.5.5     
-[77] cellranger_1.1.0  gtable_0.3.0      assertthat_0.2.1  xfun_0.23        
-[81] openxlsx_4.2.3    broom_0.7.9       rstatix_0.6.0     later_1.1.0.1    
-[85] ragg_1.1.1        ellipsis_0.3.2   </code></pre>
-</div>
+ [1] Rcpp_1.0.7        lubridate_1.7.10  xlsxjars_0.6.1    getPass_0.2-2    
+ [5] ps_1.5.0          assertthat_0.2.1  rprojroot_2.0.2   digest_0.6.27    
+ [9] utf8_1.1.4        R6_2.5.1          cellranger_1.1.0  backports_1.2.1  
+[13] reprex_2.0.0      evaluate_0.14     httr_1.4.2        pillar_1.6.1     
+[17] rlang_0.4.12      rstudioapi_0.13   whisker_0.4       callr_3.7.0      
+[21] jquerylib_0.1.3   rmarkdown_2.8     munsell_0.5.0     broom_0.7.9      
+[25] compiler_4.0.2    httpuv_1.5.5      modelr_0.1.8      xfun_0.23        
+[29] pkgconfig_2.0.3   htmltools_0.5.2   tidyselect_1.1.1  fansi_0.4.2      
+[33] crayon_1.4.1      dbplyr_2.1.1      withr_2.4.1       later_1.1.0.1    
+[37] grid_4.0.2        jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.1  
+[41] DBI_1.1.1         git2r_0.28.0      magrittr_2.0.1    scales_1.1.1.9000
+[45] cli_2.5.0         stringi_1.7.4     fs_1.5.0          promises_1.2.0.1 
+[49] xml2_1.3.2        bslib_0.2.4       ellipsis_0.3.2    generics_0.1.0   
+[53] vctrs_0.3.8       tools_4.0.2       glue_1.4.2        hms_1.0.0        
+[57] processx_3.5.1    fastmap_1.1.0     yaml_2.2.1        colorspace_2.0-2 
+[61] rvest_1.0.0       rJava_0.9-13      knitr_1.31        haven_2.3.1      
+[65] sass_0.3.1       </code></pre>
 </div>
 </div>
 
