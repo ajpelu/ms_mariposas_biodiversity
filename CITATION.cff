@@ -1,0 +1,45 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  Analysis of "Butterfly diversity, richness and
+  abundance patterns in Sierra Nevada"
+message: >-
+  Please cite this repository using the metadata from
+  'preferred-citation'.
+type: software
+authors:
+  - given-names: Antonio J.
+    family-names: Pérez-Luque
+    email: ajpelu@gmail.com
+    affiliation: >-
+      Spanish National Research Council (CSIC).
+      Experimental Station of Zaidín. Assesment,
+      Restoration and Protection of Mediterranean
+      Agrosystems (SERPAM)
+    orcid: 'https://orcid.org/0000-0002-1747-0469'
+  - given-names: José Miguel
+    family-names: Barea-Azcón
+    email: josem.barea@juntadeandalucia.es.
+    affiliation: >-
+      Agencia de Medio Ambiente y Agua (Consejería de
+      Agricultura, Ganadería, Pesca y Desarrollo
+      Sostenible, Junta de Andalucía)
+    orcid: 'https://orcid.org/0000-0001-8081-1513'
+url: 'https://ajpelu.github.io/ms_mariposas_biodiversity/'
+repository: 'https://github.com/ajpelu/ms_mariposas_biodiversity'
+abstract: >
+  In this repository, we aim to analyze the patterns
+  of diversity, richness, and abundance of diurnal
+  butterflies in the Sierra Nevada mountain region
+  (SE Spain). 
+keywords:
+  - Butterflies
+  - Sierra Nevada mountain region (Spain)
+  - global change
+  - biodiversity distribution
+  - elevational gradient
+license: CC-BY-SA-4.0
+version: '1.1'
+date-released: '2021-12-30'
