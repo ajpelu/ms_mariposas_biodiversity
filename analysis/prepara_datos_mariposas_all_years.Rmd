@@ -1,0 +1,224 @@
+---
+title: "prepara_datos_mariposas_all_years"
+author: "Antonio J. Pérez-Luque"
+date: "2021-12-30"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+En este apartado usamos los datos de contactos de mariposas para su preparación. 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE
+)
+```
+
+
+```{r pkg, message=FALSE}
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(here)
+library(lubridate)
+library(DT)
+library(vegan)
+```
+
+## Preparación de datos 
+- Usamos datos descargados directamente de [linaria.obsnev.es](https://linaria.obsnev.es/). Tenemos dos archivos: conteos y visitas. 
+
+- Utilizamos solo fecha de inicio y computamos mes, año y día de cada contacto.
+
+
+```{r read-data-count}
+rawdata <- read_delim(here::here("data/mariposas_diurnas_contactos_transectos.csv"), delim = ";") %>% 
+  janitor::clean_names() %>% 
+  mutate(year = lubridate::year(fecha_inicio), 
+         month = lubridate::month(fecha_inicio), 
+         day = lubridate::day(fecha_inicio)) %>% 
+  dplyr::select(-fecha_fin, -fecha_inicio)
+  
+# d <- rawdata %>%
+#   filter(year >= 2011) %>% 
+#   filter(year < 2021) %>% 
+#   filter(!(month %in% c(3,4,9,10)))
+
+d <- rawdata
+
+
+```
+
+- Leer información de transectos: longitud, abreviatura; y creamos una variable llamada *elev* (elevación) que corresponde al promedio entre la altura mínima y máxima del transecto. 
+
+```{r read-data-transectos}
+metadata_transectos <- read_excel(here::here("data/longitud_transectos.xlsx"),
+                 sheet = "Longitud_transectos") %>% 
+  janitor::clean_names() %>% 
+  mutate(id_transecto = paste0("16_",transectid))
+
+abrev <- read_csv(here::here("data/transect_abrev.csv")) %>% janitor::clean_names() %>% 
+  rename(id_transecto = id_transect)
+
+transectos <- metadata_transectos %>% 
+  inner_join(abrev) %>% 
+  dplyr::select(-transectid, -transect) %>% 
+  rowwise() %>% 
+  mutate(elev = round(((min_altitu+max_altitu)/2),0)) %>% 
+  rename(transecto = name)
+```
+
+### Total contactos transecto y año
+
+- Generamos un dataset con el total (número de contactos) por transecto y visita 
+
+```{r compute-ntotal-visita}
+ntotal_transecto_visita <- d %>% 
+  group_by(id_visita, id_transecto, transecto, year) %>% 
+  summarise(ntotal = sum(total)) 
+```
+
+- Leemos información de las visitas realizadas a los transectos. Genero un dataset de visitas con aquellas visitas sin contactos 
+
+```{r read-data-visitas}
+rawvisitas <- read_delim(here::here("data/mariposas_diurnas_visitas.csv"), 
+                      delim = ";", col_types = cols(Temperatura = col_number())) %>% janitor::clean_names() %>% 
+    mutate(year = lubridate::year(fecha_inicio), 
+         month = lubridate::month(fecha_inicio), 
+         day = lubridate::day(fecha_inicio)) %>%
+  dplyr::select(-fecha_fin, -fecha_inicio)
+  
+visitas <- rawvisitas %>%
+  # filter(year >= 2011) %>% 
+  # filter(year < 2021) %>% 
+  # filter(!(month %in% c(3,4,9,10))) %>% 
+  dplyr::select(id_visita=id, transecto=transecto_parcela, year, month, day) 
+
+ntotal_transecto_visitas_cero <- visitas %>% 
+  filter(!(id_visita %in% unique(d$id_visita))) %>% 
+  mutate(ntotal = 0) %>% 
+  dplyr::select(-month, -day) %>% 
+  inner_join((transectos %>% dplyr::select(transecto, id_transecto))) %>% 
+  relocate(id_visita, transecto, id_transecto)
+  
+```
+
+- Unimos los dos datasets anteriores y le adjuntamos información de los transectos. 
+
+- Filtramos los datos de 2018. Eliminamos todas las visitas de 2018 excepto para los transectos Pitres, Dúrcal, Turbera, Laguna ("16_45","16_46","16_48","16_49")
+ 
+```{r compute-ntotal}
+ntotalraw <- bind_rows(ntotal_transecto_visita, ntotal_transecto_visitas_cero) %>% inner_join(transectos) 
+
+ntotal <- ntotalraw 
+# %>% filter(!(year == 2018 & !id_transecto %in% c("16_45","16_46","16_48","16_49")))
+```
+
+### Densidad 
+
+- Densidad por año 
+
+```{r compute-densidad}
+densidad_by_year <- ntotal %>% 
+  group_by(id_transecto, transecto, site, elev, year) %>% 
+  summarise(abundancia = sum(ntotal), 
+         long_total = sum(longitud) / 100) %>% 
+  mutate(den = abundancia / long_total)
+
+```
+
+```{r export-densidad}
+write_csv(densidad_by_year, here::here("data/densidad_by_year_alldata.csv"))
+```
+
+```{r view-densidad}
+datatable(densidad_by_year)
+```
+
+### Diversidad 
+
+- ¿Cuantas especies se han contactado?. Observamos que hay registros de taxones identificados a diferentes niveles. Vamos a ver aquellos que estén registrados a nivel al menos específico. 
+
+```{r compute-especies}
+taxones_anotados <- d %>% 
+  dplyr::select(id_especie, nombre_cientifico) %>% unique() %>% 
+  mutate(w = stringr::str_count(nombre_cientifico, "\\w+"))
+
+especies <- taxones_anotados %>% filter(w>1)
+```
+
+```{r compute-diversidad}
+m <- d %>% 
+  # filter(!(year == 2018 & !id_transecto %in% c("16_45","16_46","16_48","16_49"))) %>% 
+  filter(nombre_cientifico %in% especies$nombre_cientifico) %>% 
+  mutate(sp = stringr::word(nombre_cientifico, start = 1, end = 2)) %>% 
+  mutate(spabrev = stringr::str_replace(sp," ", ".")) %>% 
+  dplyr::select(-sp) %>% 
+  mutate(sp = str_replace(spabrev, " ", ".")) %>% 
+  group_by(transecto, spabrev, year) %>% 
+  summarise(n_ind = sum(total)) %>% 
+  pivot_wider(names_from = year, 
+              values_from=n_ind, 
+              names_prefix = "y", values_fill = 0) %>% as.data.frame()
+
+years <- c("y2008","y2009","y2010","y2012","y2013","y2014","y2015","y2016","y2017","y2018","y2019","y2020")
+
+out_h <- data.frame() 
+for (y in years){ 
+  
+  vars <- c("spabrev", "transecto", y) 
+  aux_diversidad <- m %>% 
+    dplyr::select(all_of(vars)) %>% 
+    pivot_wider(names_from = spabrev, values_from = y, values_fill = 0) %>% 
+    column_to_rownames(var = "transecto")
+  
+  h <- vegan::diversity(aux_diversidad) %>% as.data.frame()
+  names(h) <- "diversidad"
+  h$year <- y
+  h$transecto <- row.names(h)
+  
+  out_h <- rbind(out_h, h)
+}
+
+# Ojo en el cómputo de diversidad aparecen años y transectos con 0. Creo que es un error. Los dejo con NA 
+
+rownames(out_h) <- NULL 
+diversidad <- out_h %>% 
+  mutate(year = as.numeric(substring(year,2)),
+         diversidad = na_if(diversidad,0)) %>% 
+  inner_join(transectos)
+
+write_csv(diversidad, here::here("data/diversidad_by_year_alldata.csv"))
+```
+
+
+```{r view-diversidad}
+datatable(diversidad)
+```
+
+### Riqueza
+
+```{r compute-riqueza}
+riq <- d %>% 
+ # filter(!(year == 2018 & !id_transecto %in% c("16_45","16_46","16_48","16_49"))) %>% 
+  filter(nombre_cientifico %in% especies$nombre_cientifico) %>% 
+  mutate(sp = stringr::word(nombre_cientifico, start = 1, end = 2)) %>% 
+  mutate(spabrev = stringr::str_replace(sp," ", ".")) %>% 
+  dplyr::select(-sp) %>%
+  group_by(transecto, year) %>% 
+  summarise(sp_unique = unique(spabrev)) %>% 
+  group_by(transecto, year) %>% 
+  count() %>% 
+  rename(riq = n) %>% 
+  inner_join(transectos) 
+
+write_csv(riq, here::here("data/riqueza_by_year_alldata.csv"))
+```
+
+```{r view-riqueza}
+datatable(riq)
+```
+
