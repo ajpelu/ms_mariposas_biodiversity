@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Antonio J. Pérez-Luque" />
+
+<meta name="date" content="2021-12-30" />
+
+<title>prepara_datos_mariposas_all_years</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.17/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ms_mariposas_biodiversity</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/ajpelu/ms_mariposas_biodiversity">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">prepara_datos_mariposas_all_years</h1>
+<h4 class="author">Antonio J. Pérez-Luque</h4>
+<h4 class="date">2021-12-30</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-12-30
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>ms_mariposas_biodiversity/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20211228code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20211228)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20211228code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20211228)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytreebaf06d690569f0cb1508a9cb9589dd5dd3a8b800targetblankbaf06d6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/baf06d690569f0cb1508a9cb9589dd5dd3a8b800" target="_blank">baf06d6</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytreebaf06d690569f0cb1508a9cb9589dd5dd3a8b800targetblankbaf06d6a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/baf06d690569f0cb1508a9cb9589dd5dd3a8b800" target="_blank">baf06d6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  data/Tabla_variables_modelización_lepidópteros_ACTUALIZADO_2020.xlsx
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/prepara_datos_mariposas_all_years.Rmd</code>) and HTML (<code>docs/prepara_datos_mariposas_all_years.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/baf06d690569f0cb1508a9cb9589dd5dd3a8b800/analysis/prepara_datos_mariposas_all_years.Rmd" target="_blank">baf06d6</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2021-12-30
+</td>
+<td>
+update link
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>En este apartado usamos los datos de contactos de mariposas para su preparación.</p>
+<pre class="r"><code>library(tidyverse)
+library(readxl)
+library(janitor)
+library(here)
+library(lubridate)
+library(DT)
+library(vegan)</code></pre>
+</div>
+<div id="preparación-de-datos" class="section level2">
+<h2>Preparación de datos</h2>
+<ul>
+<li><p>Usamos datos descargados directamente de <a href="https://linaria.obsnev.es/">linaria.obsnev.es</a>. Tenemos dos archivos: conteos y visitas.</p></li>
+<li><p>Utilizamos solo fecha de inicio y computamos mes, año y día de cada contacto.</p></li>
+</ul>
+<pre class="r"><code>rawdata &lt;- read_delim(here::here(&quot;data/mariposas_diurnas_contactos_transectos.csv&quot;), delim = &quot;;&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  mutate(year = lubridate::year(fecha_inicio), 
+         month = lubridate::month(fecha_inicio), 
+         day = lubridate::day(fecha_inicio)) %&gt;% 
+  dplyr::select(-fecha_fin, -fecha_inicio)
+  
+# d &lt;- rawdata %&gt;%
+#   filter(year &gt;= 2011) %&gt;% 
+#   filter(year &lt; 2021) %&gt;% 
+#   filter(!(month %in% c(3,4,9,10)))
+
+d &lt;- rawdata</code></pre>
+<ul>
+<li>Leer información de transectos: longitud, abreviatura; y creamos una variable llamada <em>elev</em> (elevación) que corresponde al promedio entre la altura mínima y máxima del transecto.</li>
+</ul>
+<pre class="r"><code>metadata_transectos &lt;- read_excel(here::here(&quot;data/longitud_transectos.xlsx&quot;),
+                 sheet = &quot;Longitud_transectos&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  mutate(id_transecto = paste0(&quot;16_&quot;,transectid))
+
+abrev &lt;- read_csv(here::here(&quot;data/transect_abrev.csv&quot;)) %&gt;% janitor::clean_names() %&gt;% 
+  rename(id_transecto = id_transect)
+
+transectos &lt;- metadata_transectos %&gt;% 
+  inner_join(abrev) %&gt;% 
+  dplyr::select(-transectid, -transect) %&gt;% 
+  rowwise() %&gt;% 
+  mutate(elev = round(((min_altitu+max_altitu)/2),0)) %&gt;% 
+  rename(transecto = name)</code></pre>
+<div id="total-contactos-transecto-y-año" class="section level3">
+<h3>Total contactos transecto y año</h3>
+<ul>
+<li>Generamos un dataset con el total (número de contactos) por transecto y visita</li>
+</ul>
+<pre class="r"><code>ntotal_transecto_visita &lt;- d %&gt;% 
+  group_by(id_visita, id_transecto, transecto, year) %&gt;% 
+  summarise(ntotal = sum(total)) </code></pre>
+<ul>
+<li>Leemos información de las visitas realizadas a los transectos. Genero un dataset de visitas con aquellas visitas sin contactos</li>
+</ul>
+<pre class="r"><code>rawvisitas &lt;- read_delim(here::here(&quot;data/mariposas_diurnas_visitas.csv&quot;), 
+                      delim = &quot;;&quot;, col_types = cols(Temperatura = col_number())) %&gt;% janitor::clean_names() %&gt;% 
+    mutate(year = lubridate::year(fecha_inicio), 
+         month = lubridate::month(fecha_inicio), 
+         day = lubridate::day(fecha_inicio)) %&gt;%
+  dplyr::select(-fecha_fin, -fecha_inicio)
+  
+visitas &lt;- rawvisitas %&gt;%
+  # filter(year &gt;= 2011) %&gt;% 
+  # filter(year &lt; 2021) %&gt;% 
+  # filter(!(month %in% c(3,4,9,10))) %&gt;% 
+  dplyr::select(id_visita=id, transecto=transecto_parcela, year, month, day) 
+
+ntotal_transecto_visitas_cero &lt;- visitas %&gt;% 
+  filter(!(id_visita %in% unique(d$id_visita))) %&gt;% 
+  mutate(ntotal = 0) %&gt;% 
+  dplyr::select(-month, -day) %&gt;% 
+  inner_join((transectos %&gt;% dplyr::select(transecto, id_transecto))) %&gt;% 
+  relocate(id_visita, transecto, id_transecto)</code></pre>
+<ul>
+<li><p>Unimos los dos datasets anteriores y le adjuntamos información de los transectos.</p></li>
+<li><p>Filtramos los datos de 2018. Eliminamos todas las visitas de 2018 excepto para los transectos Pitres, Dúrcal, Turbera, Laguna (“16_45”,“16_46”,“16_48”,“16_49”)</p></li>
+</ul>
+<pre class="r"><code>ntotalraw &lt;- bind_rows(ntotal_transecto_visita, ntotal_transecto_visitas_cero) %&gt;% inner_join(transectos) 
+
+ntotal &lt;- ntotalraw 
+# %&gt;% filter(!(year == 2018 &amp; !id_transecto %in% c(&quot;16_45&quot;,&quot;16_46&quot;,&quot;16_48&quot;,&quot;16_49&quot;)))</code></pre>
+</div>
+<div id="densidad" class="section level3">
+<h3>Densidad</h3>
+<ul>
+<li>Densidad por año</li>
+</ul>
+<pre class="r"><code>densidad_by_year &lt;- ntotal %&gt;% 
+  group_by(id_transecto, transecto, site, elev, year) %&gt;% 
+  summarise(abundancia = sum(ntotal), 
+         long_total = sum(longitud) / 100) %&gt;% 
+  mutate(den = abundancia / long_total)</code></pre>
+<pre class="r"><code>write_csv(densidad_by_year, here::here(&quot;data/densidad_by_year_alldata.csv&quot;))</code></pre>
+<pre class="r"><code>datatable(densidad_by_year)</code></pre>
+<div id="htmlwidget-76a4900dae2ef4114ac1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-76a4900dae2ef4114ac1">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208"],["16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_32","16_32","16_32","16_32","16_32","16_32","16_32","16_32","16_32","16_33","16_33","16_33","16_33","16_33","16_33","16_33","16_33","16_33","16_34","16_34","16_34","16_34","16_34","16_34","16_34","16_34","16_34","16_35","16_35","16_35","16_35","16_35","16_35","16_35","16_35","16_35","16_36","16_36","16_36","16_36","16_36","16_36","16_36","16_36","16_36","16_37","16_37","16_37","16_37","16_37","16_37","16_37","16_37","16_37","16_38","16_38","16_38","16_38","16_38","16_38","16_38","16_38","16_38","16_39","16_39","16_39","16_39","16_39","16_39","16_45","16_45","16_45","16_45","16_45","16_45","16_45","16_45","16_46","16_46","16_46","16_46","16_46","16_46","16_46","16_46","16_48","16_48","16_48","16_48","16_48","16_48","16_48","16_48","16_49","16_49","16_49","16_49","16_49","16_49","16_49","16_49"],["Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Hoya de la Mora","Hoya de la Mora","Hoya de la Mora","Hoya de la Mora","Hoya de la Mora","Hoya de la Mora","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna","Pitres","Pitres","Pitres","Pitres","Pitres","Pitres","Pitres","Pitres","Turbera","Turbera","Turbera","Turbera","Turbera","Turbera","Turbera","Turbera"],["LS","LS","LS","LS","LS","LS","LS","LS","LS","LS","LS","LS","LS","AC","AC","AC","AC","AC","AC","AC","AC","AC","AC","AC","AC","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","PA","PA","PA","PA","PA","PA","PA","PA","PA","PA","PA","PA","PA","PB","PB","PB","PB","PB","PB","PB","PB","PB","PB","PB","PU","PU","PU","PU","PU","PU","PU","PU","PU","PU","PU","MV","MV","MV","MV","MV","MV","MV","MV","MV","MV","MV","DI","DI","DI","DI","DI","DI","DI","DI","DI","DI","DI","CO","CO","CO","CO","CO","CO","CO","CO","CO","CO","CO","CO","FA","FA","FA","FA","FA","FA","FA","FA","FA","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","CAT","CAT","CAT","CAT","CAT","CAT","CAT","CAT","CAT","PRA","PRA","PRA","PRA","PRA","PRA","PRA","PRA","PRA","SA","SA","SA","SA","SA","SA","SA","SA","SA","CAU","CAU","CAU","CAU","CAU","CAU","CAU","CAU","CAU","CAR","CAR","CAR","CAR","CAR","CAR","CAR","CAR","CAR","HM","HM","HM","HM","HM","HM","DU","DU","DU","DU","DU","DU","DU","DU","LP","LP","LP","LP","LP","LP","LP","LP","PI","PI","PI","PI","PI","PI","PI","PI","TU","TU","TU","TU","TU","TU","TU","TU"],[2282,2282,2282,2282,2282,2282,2282,2282,2282,2282,2282,2282,2282,3126,3126,3126,3126,3126,3126,3126,3126,3126,3126,3126,3126,2545,2545,2545,2545,2545,2545,2545,2545,2545,2545,2545,2545,2545,2400,2400,2400,2400,2400,2400,2400,2400,2400,2400,2400,2400,2400,2121,2121,2121,2121,2121,2121,2121,2121,2121,2121,2121,1442,1442,1442,1442,1442,1442,1442,1442,1442,1442,1442,1919,1919,1919,1919,1919,1919,1919,1919,1919,1919,1919,1720,1720,1720,1720,1720,1720,1720,1720,1720,1720,1720,2248,2248,2248,2248,2248,2248,2248,2248,2248,2248,2248,2248,992,992,992,992,992,992,992,992,992,1362,1362,1362,1362,1362,1362,1362,1362,1362,1666,1666,1666,1666,1666,1666,1666,1666,1666,1894,1894,1894,1894,1894,1894,1894,1894,1894,2180,2180,2180,2180,2180,2180,2180,2180,2180,3203,3203,3203,3203,3203,3203,3203,3203,3203,2808,2808,2808,2808,2808,2808,2808,2808,2808,2532,2532,2532,2532,2532,2532,1950,1950,1950,1950,1950,1950,1950,1950,732,732,732,732,732,732,732,732,1379,1379,1379,1379,1379,1379,1379,1379,745,745,745,745,745,745,745,745],[2008,2009,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2008,2009,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2008,2009,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2008,2009,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2008,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2019,2014,2015,2016,2017,2018,2019,2020,2021,2014,2015,2016,2017,2018,2019,2020,2021,2014,2015,2016,2017,2018,2019,2020,2021,2014,2015,2016,2017,2018,2019,2020,2021],[616,960,441,990,1474,653,385,660,560,908,934,495,434,1,3,101,95,71,38,61,132,9,88,78,50,325,108,144,321,311,364,298,309,546,323,633,324,420,160,171,226,484,1191,680,368,864,485,465,360,380,679,84,496,733,611,290,360,422,359,373,516,428,443,1254,2955,2278,1138,1137,632,23,1295,1127,1413,609,1634,2252,1639,682,1159,1279,4,888,1043,1271,357,1473,2122,2138,855,1226,1538,13,1453,1015,2010,128,354,559,2011,1161,810,997,1134,830,800,594,774,51,223,174,20,161,188,137,102,121,156,439,553,98,229,341,256,335,370,142,323,219,115,205,287,202,192,238,53,255,245,84,174,237,138,170,222,47,135,107,70,26,74,116,80,151,12,26,24,43,48,44,25,4,13,11,11,12,1,14,7,8,9,13,21,45,33,30,46,82,2740,2320,4701,3469,3513,2925,2318,3365,362,256,252,209,168,233,223,226,1310,1516,1020,1409,1264,1024,1058,1160,311,578,266,286,398,539,685,372],[182.64,304.4,121.76,182.64,395.72,273.96,182.64,304.4,334.84,182.64,365.28,304.4,243.52,192.54,128.36,192.54,160.45,160.45,96.27,224.63,288.81,64.18,256.72,224.63,224.63,177.31,253.3,75.99,202.64,202.64,177.31,126.65,151.98,278.63,126.65,177.31,177.31,202.64,153.4,276.12,92.04,184.08,368.16,306.8,153.4,245.44,337.48,184.08,337.48,306.8,276.12,109.72,192.01,411.45,301.73,164.58,219.44,356.59,164.58,356.59,274.3,246.87,110.32,193.06,413.7,386.12,220.64,386.12,386.12,55.16,303.38,275.8,386.12,106.88,187.04,480.96,347.36,213.76,347.36,400.8,53.44,347.36,267.2,374.08,109,190.75,354.25,354.25,218,381.5,408.75,27.25,436,272.5,381.5,29.92,149.6,209.44,359.04,299.2,209.44,299.2,388.96,149.6,418.88,329.12,269.28,37.35,78.85,74.7,8.3,66.4,66.4,58.1,45.65,58.1,45.3,90.6,86.07,36.24,72.48,67.95,67.95,49.83,63.42,48.3,96.6,86.94,38.64,72.45,86.94,72.45,53.13,67.62,25.62,69.54,65.88,25.62,51.24,58.56,51.24,40.26,51.24,20.23,54.91,46.24,14.45,34.68,40.46,40.46,28.9,28.9,24.96,49.92,37.44,12.48,43.68,56.16,49.92,37.44,49.92,11.61,23.22,19.35,7.74,23.22,30.96,27.09,23.22,34.83,25.98,51.96,34.64,8.66,21.65,8.66,427.56,570.08,570.08,570.08,534.45,570.08,391.93,534.45,105,85,75,80,75,75,50,85,400.65,347.23,373.94,347.23,293.81,347.23,267.1,320.52,578.34,495.72,413.1,440.64,413.1,413.1,275.4,330.48],[3.37275514673675,3.15374507227332,3.6218791064389,5.42049934296978,3.72485595875872,2.38355964374361,2.10797196671047,2.16819973718791,1.67244056862979,4.97152869031976,2.55694261936049,1.62614980289093,1.78219448094612,0.00519372597901735,0.0233717669055781,0.524566323880752,0.592084761607978,0.442505453412278,0.394723174405318,0.271557672617193,0.457047886153527,0.140230601433468,0.342785914615145,0.347237679740017,0.222588256243601,1.83294794427838,0.426371891038294,1.89498618239242,1.58409001184366,1.53474141334386,2.05290169759179,2.35294117647059,2.03316225819187,1.95958798406489,2.5503355704698,3.57001861147143,1.82730810444983,2.07264113699171,1.04302477183833,0.619295958279009,2.4554541503694,2.62929161234246,3.23500651890482,2.21642764015645,2.39895697522816,3.52020860495437,1.43712219983406,2.52607561929596,1.0667298802892,1.23859191655802,2.45907576416051,0.765585125774699,2.5831987917296,1.78150443553287,2.0249892287807,1.76206100376716,1.6405395552315,1.18343195266272,2.18131000121521,1.04601923778008,1.88115202333212,1.73370599910884,4.01559100797679,6.49539003418626,7.14285714285714,5.89972029420905,5.15772298767223,2.94468041023516,1.63679685071998,0.416968817984046,4.26857406552838,4.08629441624365,3.65948409820781,5.69797904191617,8.73609923011121,4.68230206254158,4.71844771994473,3.19049401197605,3.33659603869185,3.19111776447106,0.0748502994011976,2.55642561031783,3.90344311377246,3.39766894781865,3.27522935779817,7.7221494102228,5.99011997177135,6.03528581510233,3.92201834862385,3.21363040629096,3.76269113149847,0.477064220183486,3.33256880733945,3.72477064220183,5.26867627785059,4.27807486631016,2.36631016042781,2.66902215431627,5.60104723707665,3.88034759358289,3.86745607333843,3.3322192513369,2.91546688605512,5.54812834224599,1.90985485103132,1.8048128342246,2.87433155080214,1.36546184738956,2.8281547241598,2.32931726907631,2.40963855421687,2.42469879518072,2.83132530120482,2.35800344234079,2.23439211391019,2.08261617900172,3.44370860927152,4.84547461368653,6.42500290461253,2.70419426048565,3.15949227373068,5.01839587932303,3.76747608535688,6.7228577162352,5.83412172816146,2.93995859213251,3.34368530020704,2.51897860593513,2.97619047619048,2.82953761214631,3.30112721417069,2.78812974465148,3.613777526821,3.51966873706004,2.06869633099141,3.66695427092321,3.71888281724347,3.27868852459016,3.39578454332553,4.04713114754098,2.69320843091335,4.22255340288127,4.33255269320843,2.3232822540781,2.45856856674558,2.31401384083045,4.84429065743945,0.749711649365629,1.82896688087,2.86702916460702,2.7681660899654,5.22491349480969,0.480769230769231,0.520833333333333,0.641025641025641,3.44551282051282,1.0989010989011,0.783475783475784,0.500801282051282,0.106837606837607,0.260416666666667,0.947459086993971,0.473729543496985,0.62015503875969,0.129198966408269,0.602928509905254,0.22609819121447,0.2953119232189,0.387596899224806,0.373241458512776,0.808314087759815,0.866050808314088,0.952655889145496,3.46420323325635,2.12471131639723,9.46882217090069,6.40845729254374,4.06960426606792,8.24621105809711,6.08511086163345,6.57311254560763,5.13085882683132,5.91432143495012,6.2961923472729,3.44761904761905,3.01176470588235,3.36,2.6125,2.24,3.10666666666667,4.46,2.65882352941176,3.2696867590166,4.36598220199868,2.72771032786008,4.05782910462806,4.30209999659644,2.94905394119172,3.9610632721827,3.61911893173593,0.537745962582564,1.16598079561043,0.643911885741951,0.649055918663762,0.963447107237957,1.30476882110869,2.48729121278141,1.12563543936093]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>id_transecto<\/th>\n      <th>transecto<\/th>\n      <th>site<\/th>\n      <th>elev<\/th>\n      <th>year<\/th>\n      <th>abundancia<\/th>\n      <th>long_total<\/th>\n      <th>den<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="diversidad" class="section level3">
+<h3>Diversidad</h3>
+<ul>
+<li>¿Cuantas especies se han contactado?. Observamos que hay registros de taxones identificados a diferentes niveles. Vamos a ver aquellos que estén registrados a nivel al menos específico.</li>
+</ul>
+<pre class="r"><code>taxones_anotados &lt;- d %&gt;% 
+  dplyr::select(id_especie, nombre_cientifico) %&gt;% unique() %&gt;% 
+  mutate(w = stringr::str_count(nombre_cientifico, &quot;\\w+&quot;))
+
+especies &lt;- taxones_anotados %&gt;% filter(w&gt;1)</code></pre>
+<pre class="r"><code>m &lt;- d %&gt;% 
+  # filter(!(year == 2018 &amp; !id_transecto %in% c(&quot;16_45&quot;,&quot;16_46&quot;,&quot;16_48&quot;,&quot;16_49&quot;))) %&gt;% 
+  filter(nombre_cientifico %in% especies$nombre_cientifico) %&gt;% 
+  mutate(sp = stringr::word(nombre_cientifico, start = 1, end = 2)) %&gt;% 
+  mutate(spabrev = stringr::str_replace(sp,&quot; &quot;, &quot;.&quot;)) %&gt;% 
+  dplyr::select(-sp) %&gt;% 
+  mutate(sp = str_replace(spabrev, &quot; &quot;, &quot;.&quot;)) %&gt;% 
+  group_by(transecto, spabrev, year) %&gt;% 
+  summarise(n_ind = sum(total)) %&gt;% 
+  pivot_wider(names_from = year, 
+              values_from=n_ind, 
+              names_prefix = &quot;y&quot;, values_fill = 0) %&gt;% as.data.frame()
+
+years &lt;- c(&quot;y2008&quot;,&quot;y2009&quot;,&quot;y2010&quot;,&quot;y2012&quot;,&quot;y2013&quot;,&quot;y2014&quot;,&quot;y2015&quot;,&quot;y2016&quot;,&quot;y2017&quot;,&quot;y2018&quot;,&quot;y2019&quot;,&quot;y2020&quot;)
+
+out_h &lt;- data.frame() 
+for (y in years){ 
+  
+  vars &lt;- c(&quot;spabrev&quot;, &quot;transecto&quot;, y) 
+  aux_diversidad &lt;- m %&gt;% 
+    dplyr::select(all_of(vars)) %&gt;% 
+    pivot_wider(names_from = spabrev, values_from = y, values_fill = 0) %&gt;% 
+    column_to_rownames(var = &quot;transecto&quot;)
+  
+  h &lt;- vegan::diversity(aux_diversidad) %&gt;% as.data.frame()
+  names(h) &lt;- &quot;diversidad&quot;
+  h$year &lt;- y
+  h$transecto &lt;- row.names(h)
+  
+  out_h &lt;- rbind(out_h, h)
+}
+
+# Ojo en el cómputo de diversidad aparecen años y transectos con 0. Creo que es un error. Los dejo con NA 
+
+rownames(out_h) &lt;- NULL 
+diversidad &lt;- out_h %&gt;% 
+  mutate(year = as.numeric(substring(year,2)),
+         diversidad = na_if(diversidad,0)) %&gt;% 
+  inner_join(transectos)
+
+write_csv(diversidad, here::here(&quot;data/diversidad_by_year_alldata.csv&quot;))</code></pre>
+<pre class="r"><code>datatable(diversidad)</code></pre>
+<div id="htmlwidget-5d6e253c7c114f7e20a4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5d6e253c7c114f7e20a4">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252"],[null,null,1.53495415470765,1.50671804690153,null,null,null,null,null,null,null,1.08252071241571,0.606886962648868,null,null,null,null,null,null,null,null,1.09861228866811,null,1.19087177888688,null,null,null,null,null,null,null,null,1.08779600584959,0.508064257998533,null,null,null,null,null,null,null,null,null,null,1.7674496918225,2.17069722298634,null,null,null,null,null,null,null,1.38579910991322,2.09462853669494,2.46377963769777,2.522166383429,null,null,2.41587087202598,1.99206119322911,null,null,0.686386739322392,2.78608077333491,2.40111793731596,2.67818154161718,0.600166073159646,2.49991474780509,1.97920451743432,null,2.82001461068211,0.978172831115188,null,1.80489778943096,2.15563468026919,2.6423215163961,2.16665457130745,null,2.48719031343611,2.70295247505281,2.25718829065235,2.26147233859536,null,0.256206289540244,2.93176432016154,2.64346237463294,2.51456878657313,0.759547391474863,3.01673655157837,1.79731584722309,null,2.70815801623398,2.28582199456173,null,1.61235205784319,1.94740866662923,2.71815644466878,2.80663492734027,null,3.07483190814077,2.71051713720864,2.61298353555517,2.55342986639194,null,0.539956994947359,2.83595827038231,2.54426467671071,2.49564208564452,0.450561208866305,2.80857153143073,0.979983163616106,2.96033820958301,2.84299453782479,2.26334702661953,1.77372105331637,1.59490673753571,2.06028029170919,2.46584444093881,2.77536878947945,2.94812120214818,3.17996969667879,2.89025299196294,2.76995331539395,2.56310002951227,1.72286911256984,1.00436884963123,3.03515157356938,2.39496944363787,2.65125512465062,null,3.01094930463774,0.764061652731786,3.16659709784071,2.19101331733694,1.88148518454418,1.21828821100598,1.85593669916172,2.24941183827713,2.28299357412654,2.89272384819003,2.84833205960118,2.90624506699454,2.73209402863922,3.21653969450511,2.34801765345915,1.62980739757752,1.62850954561528,3.06060928189166,2.37755475187517,2.77879358884263,1.29636115979106,2.86533673156606,0.714444721196966,2.85232493719969,2.64315975823096,2.24849143946484,0.779068284661527,2.21851323739126,2.49778072205344,2.72065858192024,3.16292334404327,3.1467202375257,2.89493690023559,3.08735530401417,3.30803080535087,2.42846826495307,1.38492847548507,1.62437885361845,3.29266492199974,2.63731416745376,2.77234245101013,1.27703425946614,2.92269426639216,2.273596411855,2.97407573682376,2.84026813565758,null,0.604551541957916,2.22075276295735,2.0702355796894,2.49241682677164,3.33845394007419,2.83167215610953,3.28545019531555,3.05144523057146,3.25723114011757,2.60832361426819,1.65590142382236,1.09861228866811,null,2.62280572197213,2.41499510149732,null,null,null,3.00430628762354,null,null,0.965200098388662,1.14656428892869,2.31074577187344,2.86394058989667,0.562335144618808,2.92459983729596,null,2.1226060622557,0.858740913006287,null,1.72566233172825,1.19144299559163,2.92342102208905,2.37168837329912,2.73642650377752,1.49417513828931,3.07747086201845,1.46531692626573,3.17891728734494,2.5645390112451,1.15330351263852,0.683172988890017,1.54080904997097,2.59207123962754,2.61164978109705,3.16625216648044,2.92844083333422,3.22035949962956,2.83002602082466,3.15674201030042,2.21167451935654,2.21207045514929,1.4666432110054,3.0683139619812,2.68619211897972,2.82782803437081,1.27302833658963,2.5840314953447,1.38629436111989,3.1197520071757,2.63476085182137,null,0.588645996560836,2.07373572420452,2.370106574645,2.79678138993263,2.91441961736415,2.99661643696248,2.75449849903457,2.69084104617189,3.20051143751329,2.57083617636553,1.90947426670373],[2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2012,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020,2020],["Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera","Altas cumbres","Barranco de San Juan","Borreguiles San Juan","Campos de Otero","Carihuela","Catifas","Cauchiles","Dúrcal","Fabriquilla","Hoya de la Mora","Laguna","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Bajo","Matas Verdes","Pitres","Praillos","Purche","Robledal de Dilar","Sabinas","Turbera"],[3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754,3209,453,2533,2992,387,483,624,3563,415,433,500,3044,3068,2743,2672,2671,366,2758,2725,289,2754],[3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723,3081,1347,2527,2178,2792,1658,3196,1913,971,2524,726,2257,2338,2052,1851,1283,1887,1387,1673,2177,723],[3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767,3170,1377,2563,2317,2824,1673,3210,1987,1013,2540,739,2306,2463,2190,1987,1475,1900,1496,1767,2184,767],["16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49","16_15","16_33","16_16","16_24","16_38","16_34","16_37","16_45","16_32","16_39","16_46","16_14","16_17","16_18","16_21","16_48","16_35","16_20","16_23","16_36","16_49"],["AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU","AC","BSJ","BOSJ","CO","CAR","CAT","CAU","DU","FA","HM","LP","LS","PA","PB","MV","PI","PRA","PU","DI","SA","TU"],[3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745,3126,1362,2545,2248,2808,1666,3203,1950,992,2532,732,2282,2400,2121,1919,1379,1894,1442,1720,2180,745]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>diversidad<\/th>\n      <th>year<\/th>\n      <th>transecto<\/th>\n      <th>longitud<\/th>\n      <th>min_altitu<\/th>\n      <th>max_altitu<\/th>\n      <th>id_transecto<\/th>\n      <th>site<\/th>\n      <th>elev<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,4,5,6,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="riqueza" class="section level3">
+<h3>Riqueza</h3>
+<pre class="r"><code>riq &lt;- d %&gt;% 
+ # filter(!(year == 2018 &amp; !id_transecto %in% c(&quot;16_45&quot;,&quot;16_46&quot;,&quot;16_48&quot;,&quot;16_49&quot;))) %&gt;% 
+  filter(nombre_cientifico %in% especies$nombre_cientifico) %&gt;% 
+  mutate(sp = stringr::word(nombre_cientifico, start = 1, end = 2)) %&gt;% 
+  mutate(spabrev = stringr::str_replace(sp,&quot; &quot;, &quot;.&quot;)) %&gt;% 
+  dplyr::select(-sp) %&gt;%
+  group_by(transecto, year) %&gt;% 
+  summarise(sp_unique = unique(spabrev)) %&gt;% 
+  group_by(transecto, year) %&gt;% 
+  count() %&gt;% 
+  rename(riq = n) %&gt;% 
+  inner_join(transectos) 
+
+write_csv(riq, here::here(&quot;data/riqueza_by_year_alldata.csv&quot;))</code></pre>
+<pre class="r"><code>datatable(riq)</code></pre>
+<div id="htmlwidget-95d8fa764b837ffde9a0" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-95d8fa764b837ffde9a0">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208"],["Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Hoya de la Mora","Hoya de la Mora","Hoya de la Mora","Hoya de la Mora","Hoya de la Mora","Hoya de la Mora","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Pitres","Pitres","Pitres","Pitres","Pitres","Pitres","Pitres","Pitres","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Turbera","Turbera","Turbera","Turbera","Turbera","Turbera","Turbera","Turbera"],[2008,2009,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2008,2009,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2008,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2014,2015,2016,2017,2018,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2012,2013,2014,2015,2016,2019,2014,2015,2016,2017,2018,2019,2020,2021,2008,2009,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2008,2009,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2014,2015,2016,2017,2018,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2010,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2012,2013,2014,2015,2016,2017,2019,2020,2021,2014,2015,2016,2017,2018,2019,2020,2021],[1,3,6,4,7,6,9,12,3,7,8,7,30,43,44,29,34,49,39,42,52,12,9,16,27,29,27,19,25,24,22,25,24,29,14,22,35,34,41,27,44,41,26,35,34,36,3,3,2,1,5,4,5,4,4,21,37,35,29,30,46,39,26,37,8,8,4,6,3,12,8,4,5,46,42,42,53,52,48,50,50,23,32,30,12,29,37,27,25,30,5,13,13,8,13,10,19,12,9,7,8,8,6,9,4,5,12,21,18,23,20,20,20,14,18,18,21,4,3,19,21,25,22,21,28,23,18,24,23,25,22,26,32,35,26,29,27,28,28,30,37,32,38,52,63,46,49,63,2,52,46,52,44,50,46,41,40,45,43,42,16,39,37,26,33,48,38,28,32,26,39,44,54,41,52,51,10,52,41,51,23,44,54,64,54,54,62,3,62,61,60,14,20,24,14,14,18,20,19,21,20,18,15,22,18,32,26,23],[3209,3209,3209,3209,3209,3209,3209,3209,3209,3209,3209,3209,453,453,453,453,453,453,453,453,453,2533,2533,2533,2533,2533,2533,2533,2533,2533,2533,2533,2533,2533,2992,2992,2992,2992,2992,2992,2992,2992,2992,2992,2992,2992,387,387,387,387,387,387,387,387,387,483,483,483,483,483,483,483,483,483,624,624,624,624,624,624,624,624,624,3563,3563,3563,3563,3563,3563,3563,3563,415,415,415,415,415,415,415,415,415,433,433,433,433,433,433,500,500,500,500,500,500,500,500,3044,3044,3044,3044,3044,3044,3044,3044,3044,3044,3044,3044,3044,3068,3068,3068,3068,3068,3068,3068,3068,3068,3068,3068,3068,3068,2743,2743,2743,2743,2743,2743,2743,2743,2743,2743,2743,2672,2672,2672,2672,2672,2672,2672,2672,2672,2672,2672,2671,2671,2671,2671,2671,2671,2671,2671,366,366,366,366,366,366,366,366,366,2758,2758,2758,2758,2758,2758,2758,2758,2758,2758,2758,2725,2725,2725,2725,2725,2725,2725,2725,2725,2725,2725,289,289,289,289,289,289,289,289,289,2754,2754,2754,2754,2754,2754,2754,2754],[3081,3081,3081,3081,3081,3081,3081,3081,3081,3081,3081,3081,1347,1347,1347,1347,1347,1347,1347,1347,1347,2527,2527,2527,2527,2527,2527,2527,2527,2527,2527,2527,2527,2527,2178,2178,2178,2178,2178,2178,2178,2178,2178,2178,2178,2178,2792,2792,2792,2792,2792,2792,2792,2792,2792,1658,1658,1658,1658,1658,1658,1658,1658,1658,3196,3196,3196,3196,3196,3196,3196,3196,3196,1913,1913,1913,1913,1913,1913,1913,1913,971,971,971,971,971,971,971,971,971,2524,2524,2524,2524,2524,2524,726,726,726,726,726,726,726,726,2257,2257,2257,2257,2257,2257,2257,2257,2257,2257,2257,2257,2257,2338,2338,2338,2338,2338,2338,2338,2338,2338,2338,2338,2338,2338,2052,2052,2052,2052,2052,2052,2052,2052,2052,2052,2052,1851,1851,1851,1851,1851,1851,1851,1851,1851,1851,1851,1283,1283,1283,1283,1283,1283,1283,1283,1887,1887,1887,1887,1887,1887,1887,1887,1887,1387,1387,1387,1387,1387,1387,1387,1387,1387,1387,1387,1673,1673,1673,1673,1673,1673,1673,1673,1673,1673,1673,2177,2177,2177,2177,2177,2177,2177,2177,2177,723,723,723,723,723,723,723,723],[3170,3170,3170,3170,3170,3170,3170,3170,3170,3170,3170,3170,1377,1377,1377,1377,1377,1377,1377,1377,1377,2563,2563,2563,2563,2563,2563,2563,2563,2563,2563,2563,2563,2563,2317,2317,2317,2317,2317,2317,2317,2317,2317,2317,2317,2317,2824,2824,2824,2824,2824,2824,2824,2824,2824,1673,1673,1673,1673,1673,1673,1673,1673,1673,3210,3210,3210,3210,3210,3210,3210,3210,3210,1987,1987,1987,1987,1987,1987,1987,1987,1013,1013,1013,1013,1013,1013,1013,1013,1013,2540,2540,2540,2540,2540,2540,739,739,739,739,739,739,739,739,2306,2306,2306,2306,2306,2306,2306,2306,2306,2306,2306,2306,2306,2463,2463,2463,2463,2463,2463,2463,2463,2463,2463,2463,2463,2463,2190,2190,2190,2190,2190,2190,2190,2190,2190,2190,2190,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1987,1475,1475,1475,1475,1475,1475,1475,1475,1900,1900,1900,1900,1900,1900,1900,1900,1900,1496,1496,1496,1496,1496,1496,1496,1496,1496,1496,1496,1767,1767,1767,1767,1767,1767,1767,1767,1767,1767,1767,2184,2184,2184,2184,2184,2184,2184,2184,2184,767,767,767,767,767,767,767,767],["16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_33","16_33","16_33","16_33","16_33","16_33","16_33","16_33","16_33","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_38","16_38","16_38","16_38","16_38","16_38","16_38","16_38","16_38","16_34","16_34","16_34","16_34","16_34","16_34","16_34","16_34","16_34","16_37","16_37","16_37","16_37","16_37","16_37","16_37","16_37","16_37","16_45","16_45","16_45","16_45","16_45","16_45","16_45","16_45","16_32","16_32","16_32","16_32","16_32","16_32","16_32","16_32","16_32","16_39","16_39","16_39","16_39","16_39","16_39","16_46","16_46","16_46","16_46","16_46","16_46","16_46","16_46","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_48","16_48","16_48","16_48","16_48","16_48","16_48","16_48","16_35","16_35","16_35","16_35","16_35","16_35","16_35","16_35","16_35","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_36","16_36","16_36","16_36","16_36","16_36","16_36","16_36","16_36","16_49","16_49","16_49","16_49","16_49","16_49","16_49","16_49"],["AC","AC","AC","AC","AC","AC","AC","AC","AC","AC","AC","AC","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","CO","CO","CO","CO","CO","CO","CO","CO","CO","CO","CO","CO","CAR","CAR","CAR","CAR","CAR","CAR","CAR","CAR","CAR","CAT","CAT","CAT","CAT","CAT","CAT","CAT","CAT","CAT","CAU","CAU","CAU","CAU","CAU","CAU","CAU","CAU","CAU","DU","DU","DU","DU","DU","DU","DU","DU","FA","FA","FA","FA","FA","FA","FA","FA","FA","HM","HM","HM","HM","HM","HM","LP","LP","LP","LP","LP","LP","LP","LP","LS","LS","LS","LS","LS","LS","LS","LS","LS","LS","LS","LS","LS","PA","PA","PA","PA","PA","PA","PA","PA","PA","PA","PA","PA","PA","PB","PB","PB","PB","PB","PB","PB","PB","PB","PB","PB","MV","MV","MV","MV","MV","MV","MV","MV","MV","MV","MV","PI","PI","PI","PI","PI","PI","PI","PI","PRA","PRA","PRA","PRA","PRA","PRA","PRA","PRA","PRA","PU","PU","PU","PU","PU","PU","PU","PU","PU","PU","PU","DI","DI","DI","DI","DI","DI","DI","DI","DI","DI","DI","SA","SA","SA","SA","SA","SA","SA","SA","SA","TU","TU","TU","TU","TU","TU","TU","TU"],[3126,3126,3126,3126,3126,3126,3126,3126,3126,3126,3126,3126,1362,1362,1362,1362,1362,1362,1362,1362,1362,2545,2545,2545,2545,2545,2545,2545,2545,2545,2545,2545,2545,2545,2248,2248,2248,2248,2248,2248,2248,2248,2248,2248,2248,2248,2808,2808,2808,2808,2808,2808,2808,2808,2808,1666,1666,1666,1666,1666,1666,1666,1666,1666,3203,3203,3203,3203,3203,3203,3203,3203,3203,1950,1950,1950,1950,1950,1950,1950,1950,992,992,992,992,992,992,992,992,992,2532,2532,2532,2532,2532,2532,732,732,732,732,732,732,732,732,2282,2282,2282,2282,2282,2282,2282,2282,2282,2282,2282,2282,2282,2400,2400,2400,2400,2400,2400,2400,2400,2400,2400,2400,2400,2400,2121,2121,2121,2121,2121,2121,2121,2121,2121,2121,2121,1919,1919,1919,1919,1919,1919,1919,1919,1919,1919,1919,1379,1379,1379,1379,1379,1379,1379,1379,1894,1894,1894,1894,1894,1894,1894,1894,1894,1442,1442,1442,1442,1442,1442,1442,1442,1442,1442,1442,1720,1720,1720,1720,1720,1720,1720,1720,1720,1720,1720,2180,2180,2180,2180,2180,2180,2180,2180,2180,745,745,745,745,745,745,745,745]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>transecto<\/th>\n      <th>year<\/th>\n      <th>riq<\/th>\n      <th>longitud<\/th>\n      <th>min_altitu<\/th>\n      <th>max_altitu<\/th>\n      <th>id_transecto<\/th>\n      <th>site<\/th>\n      <th>elev<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.2 (2020-06-22)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.3
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] vegan_2.5-7      lattice_0.20-41  permute_0.9-5    DT_0.17         
+ [5] lubridate_1.7.10 here_1.0.1       janitor_2.1.0    readxl_1.3.1    
+ [9] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.6      purrr_0.3.4     
+[13] readr_1.4.0      tidyr_1.1.3      tibble_3.1.2     ggplot2_3.3.5   
+[17] tidyverse_1.3.1  workflowr_1.7.0 
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2        sass_0.3.1        splines_4.0.2     jsonlite_1.7.2   
+ [5] modelr_0.1.8      bslib_0.2.4       assertthat_0.2.1  getPass_0.2-2    
+ [9] cellranger_1.1.0  yaml_2.2.1        pillar_1.6.1      backports_1.2.1  
+[13] glue_1.4.2        digest_0.6.27     promises_1.2.0.1  rvest_1.0.0      
+[17] snakecase_0.11.0  colorspace_2.0-2  Matrix_1.3-2      htmltools_0.5.2  
+[21] httpuv_1.5.5      pkgconfig_2.0.3   broom_0.7.9       haven_2.3.1      
+[25] scales_1.1.1.9000 processx_3.5.1    whisker_0.4       later_1.1.0.1    
+[29] git2r_0.28.0      mgcv_1.8-33       generics_0.1.0    ellipsis_0.3.2   
+[33] withr_2.4.1       cli_2.5.0         magrittr_2.0.1    crayon_1.4.1     
+[37] evaluate_0.14     ps_1.5.0          fs_1.5.0          fansi_0.4.2      
+[41] nlme_3.1-152      MASS_7.3-53       xml2_1.3.2        tools_4.0.2      
+[45] hms_1.0.0         lifecycle_1.0.1   munsell_0.5.0     reprex_2.0.0     
+[49] cluster_2.1.0     callr_3.7.0       compiler_4.0.2    jquerylib_0.1.3  
+[53] rlang_0.4.12      grid_4.0.2        rstudioapi_0.13   htmlwidgets_1.5.3
+[57] crosstalk_1.1.1   rmarkdown_2.8     gtable_0.3.0      DBI_1.1.1        
+[61] R6_2.5.1          knitr_1.31        fastmap_1.1.0     utf8_1.1.4       
+[65] rprojroot_2.0.2   stringi_1.7.4     parallel_4.0.2    Rcpp_1.0.7       
+[69] vctrs_0.3.8       dbplyr_2.1.1      tidyselect_1.1.1  xfun_0.23        </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
