@@ -484,16 +484,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree2cf9d33f66890f3a893d340b3e598a10c5fdaa3btargetblank2cf9d33a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/2cf9d33f66890f3a893d340b3e598a10c5fdaa3b" target="_blank">2cf9d33</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytreee6ecd35ccd653d8ef777c938d6f54d15828f66actargetblanke6ecd35a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/e6ecd35ccd653d8ef777c938d6f54d15828f66ac" target="_blank">e6ecd35</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree2cf9d33f66890f3a893d340b3e598a10c5fdaa3btargetblank2cf9d33a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytreee6ecd35ccd653d8ef777c938d6f54d15828f66actargetblanke6ecd35a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/2cf9d33f66890f3a893d340b3e598a10c5fdaa3b" target="_blank">2cf9d33</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/e6ecd35ccd653d8ef777c938d6f54d15828f66ac" target="_blank">e6ecd35</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -504,12 +504,17 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
+    Untracked:  analysis/tabla_descriptivos.Rmd
     Untracked:  data/Tabla_variables_modelización_lepidópteros_ACTUALIZADO_2020.xlsx
+    Untracked:  data/riqueza_by_site.csv
+    Untracked:  data/transectos_tabla.csv
 
 Unstaged changes:
     Modified:   data/densidad_by_year.csv
     Modified:   data/diversidad_by_year.csv
     Modified:   data/riqueza_by_year.csv
+    Modified:   figs/plot_variables_elevation.pdf
+    Modified:   figs/plot_variables_elevation.png
 
 </code></pre>
 <p>
@@ -548,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/e6ecd35ccd653d8ef777c938d6f54d15828f66ac/analysis/prepara_datos_mariposas.Rmd" target="_blank">e6ecd35</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-18
+</td>
+<td>
+compute richness
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_biodiversity/cece0cb4aafb901b061ab268fe4ab48c74d8be9a/docs/prepara_datos_mariposas.html" target="_blank">cece0cb</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -658,7 +697,9 @@ transectos &lt;- metadata_transectos %&gt;%
   dplyr::select(-transectid, -transect) %&gt;% 
   rowwise() %&gt;% 
   mutate(elev = round(((min_altitu+max_altitu)/2),0)) %&gt;% 
-  rename(transecto = name)</code></pre>
+  rename(transecto = name)
+
+write_csv(transectos, here::here(&quot;data/transectos_tabla.csv&quot;))</code></pre>
 <div id="total-contactos-transecto-y-año" class="section level3">
 <h3>Total contactos transecto y año</h3>
 <ul>
@@ -789,6 +830,20 @@ write_csv(riq, here::here(&quot;data/riqueza_by_year.csv&quot;))</code></pre>
 <pre class="r"><code>datatable(riq)</code></pre>
 <div id="htmlwidget-95d8fa764b837ffde9a0" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-95d8fa764b837ffde9a0">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156"],["Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Altas cumbres","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Barranco de San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Borreguiles San Juan","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Campos de Otero","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Carihuela","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Catifas","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Cauchiles","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Dúrcal","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Fabriquilla","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Laguna Seca","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Alto","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Loma de Papeles Bajo","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Matas Verdes","Pitres","Pitres","Pitres","Pitres","Pitres","Pitres","Pitres","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Praillos","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Purche","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Robledal de Dilar","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Sabinas","Turbera","Turbera","Turbera","Turbera","Turbera","Turbera","Turbera"],[2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2014,2015,2016,2017,2018,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2014,2015,2016,2017,2018,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2014,2015,2016,2017,2018,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2012,2013,2014,2015,2016,2017,2019,2020,2014,2015,2016,2017,2018,2019,2020],[6,4,7,6,7,12,6,8,30,39,38,29,28,43,36,38,27,28,25,19,25,24,25,24,35,34,41,27,44,41,34,34,3,3,2,1,5,4,5,4,21,36,33,29,28,41,37,26,8,8,4,6,3,12,7,4,45,42,42,51,52,47,50,16,26,23,12,21,29,19,23,16,11,8,5,7,7,6,21,17,23,20,20,20,17,18,21,24,22,21,28,23,24,23,26,29,35,26,29,27,28,30,38,50,61,44,49,61,51,46,39,47,40,39,39,43,41,16,37,36,26,31,45,37,27,39,41,53,40,49,44,51,41,44,51,64,54,54,61,61,60,14,20,24,14,12,18,17,19,19,17,13,19,17,26,24],[3209,3209,3209,3209,3209,3209,3209,3209,453,453,453,453,453,453,453,453,2533,2533,2533,2533,2533,2533,2533,2533,2992,2992,2992,2992,2992,2992,2992,2992,387,387,387,387,387,387,387,387,483,483,483,483,483,483,483,483,624,624,624,624,624,624,624,624,3563,3563,3563,3563,3563,3563,3563,415,415,415,415,415,415,415,415,500,500,500,500,500,500,500,3044,3044,3044,3044,3044,3044,3044,3044,3068,3068,3068,3068,3068,3068,3068,3068,2743,2743,2743,2743,2743,2743,2743,2743,2672,2672,2672,2672,2672,2672,2672,2672,2671,2671,2671,2671,2671,2671,2671,366,366,366,366,366,366,366,366,2758,2758,2758,2758,2758,2758,2758,2758,2725,2725,2725,2725,2725,2725,2725,2725,289,289,289,289,289,289,289,289,2754,2754,2754,2754,2754,2754,2754],[3081,3081,3081,3081,3081,3081,3081,3081,1347,1347,1347,1347,1347,1347,1347,1347,2527,2527,2527,2527,2527,2527,2527,2527,2178,2178,2178,2178,2178,2178,2178,2178,2792,2792,2792,2792,2792,2792,2792,2792,1658,1658,1658,1658,1658,1658,1658,1658,3196,3196,3196,3196,3196,3196,3196,3196,1913,1913,1913,1913,1913,1913,1913,971,971,971,971,971,971,971,971,726,726,726,726,726,726,726,2257,2257,2257,2257,2257,2257,2257,2257,2338,2338,2338,2338,2338,2338,2338,2338,2052,2052,2052,2052,2052,2052,2052,2052,1851,1851,1851,1851,1851,1851,1851,1851,1283,1283,1283,1283,1283,1283,1283,1887,1887,1887,1887,1887,1887,1887,1887,1387,1387,1387,1387,1387,1387,1387,1387,1673,1673,1673,1673,1673,1673,1673,1673,2177,2177,2177,2177,2177,2177,2177,2177,723,723,723,723,723,723,723],[3170,3170,3170,3170,3170,3170,3170,3170,1377,1377,1377,1377,1377,1377,1377,1377,2563,2563,2563,2563,2563,2563,2563,2563,2317,2317,2317,2317,2317,2317,2317,2317,2824,2824,2824,2824,2824,2824,2824,2824,1673,1673,1673,1673,1673,1673,1673,1673,3210,3210,3210,3210,3210,3210,3210,3210,1987,1987,1987,1987,1987,1987,1987,1013,1013,1013,1013,1013,1013,1013,1013,739,739,739,739,739,739,739,2306,2306,2306,2306,2306,2306,2306,2306,2463,2463,2463,2463,2463,2463,2463,2463,2190,2190,2190,2190,2190,2190,2190,2190,1987,1987,1987,1987,1987,1987,1987,1987,1475,1475,1475,1475,1475,1475,1475,1900,1900,1900,1900,1900,1900,1900,1900,1496,1496,1496,1496,1496,1496,1496,1496,1767,1767,1767,1767,1767,1767,1767,1767,2184,2184,2184,2184,2184,2184,2184,2184,767,767,767,767,767,767,767],["16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_15","16_33","16_33","16_33","16_33","16_33","16_33","16_33","16_33","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_16","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_24","16_38","16_38","16_38","16_38","16_38","16_38","16_38","16_38","16_34","16_34","16_34","16_34","16_34","16_34","16_34","16_34","16_37","16_37","16_37","16_37","16_37","16_37","16_37","16_37","16_45","16_45","16_45","16_45","16_45","16_45","16_45","16_32","16_32","16_32","16_32","16_32","16_32","16_32","16_32","16_46","16_46","16_46","16_46","16_46","16_46","16_46","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_14","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_17","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_18","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_21","16_48","16_48","16_48","16_48","16_48","16_48","16_48","16_35","16_35","16_35","16_35","16_35","16_35","16_35","16_35","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_20","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_23","16_36","16_36","16_36","16_36","16_36","16_36","16_36","16_36","16_49","16_49","16_49","16_49","16_49","16_49","16_49"],["AC","AC","AC","AC","AC","AC","AC","AC","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","BOSJ","CO","CO","CO","CO","CO","CO","CO","CO","CAR","CAR","CAR","CAR","CAR","CAR","CAR","CAR","CAT","CAT","CAT","CAT","CAT","CAT","CAT","CAT","CAU","CAU","CAU","CAU","CAU","CAU","CAU","CAU","DU","DU","DU","DU","DU","DU","DU","FA","FA","FA","FA","FA","FA","FA","FA","LP","LP","LP","LP","LP","LP","LP","LS","LS","LS","LS","LS","LS","LS","LS","PA","PA","PA","PA","PA","PA","PA","PA","PB","PB","PB","PB","PB","PB","PB","PB","MV","MV","MV","MV","MV","MV","MV","MV","PI","PI","PI","PI","PI","PI","PI","PRA","PRA","PRA","PRA","PRA","PRA","PRA","PRA","PU","PU","PU","PU","PU","PU","PU","PU","DI","DI","DI","DI","DI","DI","DI","DI","SA","SA","SA","SA","SA","SA","SA","SA","TU","TU","TU","TU","TU","TU","TU"],[3126,3126,3126,3126,3126,3126,3126,3126,1362,1362,1362,1362,1362,1362,1362,1362,2545,2545,2545,2545,2545,2545,2545,2545,2248,2248,2248,2248,2248,2248,2248,2248,2808,2808,2808,2808,2808,2808,2808,2808,1666,1666,1666,1666,1666,1666,1666,1666,3203,3203,3203,3203,3203,3203,3203,3203,1950,1950,1950,1950,1950,1950,1950,992,992,992,992,992,992,992,992,732,732,732,732,732,732,732,2282,2282,2282,2282,2282,2282,2282,2282,2400,2400,2400,2400,2400,2400,2400,2400,2121,2121,2121,2121,2121,2121,2121,2121,1919,1919,1919,1919,1919,1919,1919,1919,1379,1379,1379,1379,1379,1379,1379,1894,1894,1894,1894,1894,1894,1894,1894,1442,1442,1442,1442,1442,1442,1442,1442,1720,1720,1720,1720,1720,1720,1720,1720,2180,2180,2180,2180,2180,2180,2180,2180,745,745,745,745,745,745,745]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>transecto<\/th>\n      <th>year<\/th>\n      <th>riq<\/th>\n      <th>longitud<\/th>\n      <th>min_altitu<\/th>\n      <th>max_altitu<\/th>\n      <th>id_transecto<\/th>\n      <th>site<\/th>\n      <th>elev<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>riq_site &lt;- d %&gt;% 
+  filter(!(year == 2018 &amp; !id_transecto %in% c(&quot;16_45&quot;,&quot;16_46&quot;,&quot;16_48&quot;,&quot;16_49&quot;))) %&gt;% 
+  filter(nombre_cientifico %in% especies$nombre_cientifico) %&gt;% 
+  mutate(sp = stringr::word(nombre_cientifico, start = 1, end = 2)) %&gt;% 
+  mutate(spabrev = stringr::str_replace(sp,&quot; &quot;, &quot;.&quot;)) %&gt;% 
+  dplyr::select(-sp) %&gt;%
+  group_by(transecto) %&gt;% 
+  summarise(sp_unique = unique(spabrev)) %&gt;% 
+  group_by(transecto) %&gt;% 
+  count() %&gt;% 
+  rename(riq = n) %&gt;% 
+  inner_join(transectos) 
+
+write_csv(riq_site, here::here(&quot;data/riqueza_by_site.csv&quot;))</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
