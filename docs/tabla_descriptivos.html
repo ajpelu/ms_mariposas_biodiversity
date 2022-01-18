@@ -478,16 +478,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree8f1c7af353b812bb282268661dd76d848393da4ctargetblank8f1c7afa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/8f1c7af353b812bb282268661dd76d848393da4c" target="_blank">8f1c7af</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree5ca37e79e10083752ebc92ef94a234bf379bcf93targetblank5ca37e7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/5ca37e79e10083752ebc92ef94a234bf379bcf93" target="_blank">5ca37e7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree8f1c7af353b812bb282268661dd76d848393da4ctargetblank8f1c7afa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree5ca37e79e10083752ebc92ef94a234bf379bcf93targetblank5ca37e7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/8f1c7af353b812bb282268661dd76d848393da4c" target="_blank">8f1c7af</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/5ca37e79e10083752ebc92ef94a234bf379bcf93" target="_blank">5ca37e7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -543,6 +543,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/5ca37e79e10083752ebc92ef94a234bf379bcf93/analysis/tabla_descriptivos.Rmd" target="_blank">5ca37e7</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-18
+</td>
+<td>
+add tabla descriptivos
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_biodiversity/0e8a6b50fbf54c0e572a91a0d2598bd9bcc42ee8/docs/tabla_descriptivos.html" target="_blank">0e8a6b5</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/8f1c7af353b812bb282268661dd76d848393da4c/analysis/tabla_descriptivos.Rmd" target="_blank">8f1c7af</a>
 </td>
 <td>
@@ -564,111 +598,38 @@ wflow_publish(“analysis/tabla_descriptivos.Rmd”)
 </div>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-✓ tibble  3.1.2     ✓ dplyr   1.0.6
-✓ tidyr   1.1.3     ✓ stringr 1.4.0
-✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
-<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-x dplyr::filter() masks stats::filter()
-x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(here)</code></pre>
-<pre><code>here() starts at /Volumes/GoogleDrive/My Drive/MS/2021_MS_MARIPOSAS/ms_mariposas_biodiversity</code></pre>
-<pre class="r"><code>library(kableExtra)</code></pre>
-<pre><code>
-Attaching package: &#39;kableExtra&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:dplyr&#39;:
-
-    group_rows</code></pre>
+<ul>
+<li>Genera tabla de descriptivos</li>
+</ul>
+<pre class="r"><code>library(tidyverse)
+library(here)
+library(kableExtra)</code></pre>
 <ul>
 <li>Read data</li>
 </ul>
-<pre class="r"><code>denraw &lt;- read_csv(here::here(&quot;data/densidad_by_year.csv&quot;)) </code></pre>
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────
-cols(
-  id_transecto = col_character(),
-  transecto = col_character(),
-  site = col_character(),
-  elev = col_double(),
-  year = col_double(),
-  abundancia = col_double(),
-  long_total = col_double(),
-  den = col_double()
-)</code></pre>
-<pre class="r"><code>divraw &lt;- read_csv(here::here(&quot;data/diversidad_by_year.csv&quot;)) </code></pre>
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────
-cols(
-  diversidad = col_double(),
-  year = col_double(),
-  transecto = col_character(),
-  longitud = col_double(),
-  min_altitu = col_double(),
-  max_altitu = col_double(),
-  id_transecto = col_character(),
-  site = col_character(),
-  elev = col_double()
-)</code></pre>
-<pre class="r"><code>riqraw &lt;- read_csv(here::here(&quot;data/riqueza_by_year.csv&quot;))</code></pre>
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────
-cols(
-  transecto = col_character(),
-  year = col_double(),
-  riq = col_double(),
-  longitud = col_double(),
-  min_altitu = col_double(),
-  max_altitu = col_double(),
-  id_transecto = col_character(),
-  site = col_character(),
-  elev = col_double()
-)</code></pre>
-<pre class="r"><code>richness &lt;- read_csv(here::here(&quot;data/riqueza_by_site.csv&quot;))</code></pre>
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────
-cols(
-  transecto = col_character(),
-  riq = col_double(),
-  longitud = col_double(),
-  min_altitu = col_double(),
-  max_altitu = col_double(),
-  id_transecto = col_character(),
-  site = col_character(),
-  elev = col_double()
-)</code></pre>
-<pre class="r"><code>transectos &lt;- read_csv(here::here(&quot;data/transectos_tabla.csv&quot;))</code></pre>
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────
-cols(
-  transecto = col_character(),
-  longitud = col_double(),
-  min_altitu = col_double(),
-  max_altitu = col_double(),
-  id_transecto = col_character(),
-  site = col_character(),
-  elev = col_double()
-)</code></pre>
+<pre class="r"><code>denraw &lt;- read_csv(here::here(&quot;data/densidad_by_year.csv&quot;)) 
+divraw &lt;- read_csv(here::here(&quot;data/diversidad_by_year.csv&quot;)) 
+riqraw &lt;- read_csv(here::here(&quot;data/riqueza_by_year.csv&quot;))
+richness &lt;- read_csv(here::here(&quot;data/riqueza_by_site.csv&quot;))
+transectos &lt;- read_csv(here::here(&quot;data/transectos_tabla.csv&quot;))</code></pre>
 <pre class="r"><code>densidad_avg &lt;- denraw %&gt;%
   group_by(transecto, site, elev) %&gt;%
   summarise(mean = mean(den, na.rm = TRUE),
             sd = sd(den, na.rm = TRUE),
-            se = sd/sqrt(n()))</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;transecto&#39;, &#39;site&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>diversidad_avg &lt;- divraw %&gt;%
+            se = sd/sqrt(n()))
+
+diversidad_avg &lt;- divraw %&gt;%
   group_by(transecto, site, elev) %&gt;%
   summarise(mean = mean(diversidad, na.rm = TRUE),
             sd = sd(diversidad, na.rm = TRUE),
-            se = sd/sqrt(n()))</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;transecto&#39;, &#39;site&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>abundancia &lt;- denraw %&gt;%
+            se = sd/sqrt(n()))
+
+abundancia &lt;- denraw %&gt;%
   group_by(transecto, site) %&gt;%
   summarise(mean = round(mean(abundancia),2),
             sd = sd(abundancia),
             se = round(sd/sqrt(n()),2),
             n_ind_total = sum(abundancia))</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;transecto&#39;. You can override using the `.groups` argument.</code></pre>
 <pre class="r"><code>descriptivos &lt;- 
   transectos %&gt;% inner_join(densidad_avg) %&gt;%
   dplyr::select(-sd) %&gt;%
@@ -698,12 +659,9 @@ cols(
     &quot;Diversity (H’)&quot; = diversity,
     &quot;Richness&quot; = richness,
     &quot;Mean number of individuals&quot; = abundancia_media,
-    &quot;Total number of individuals&quot; = n_ind_total)</code></pre>
-<pre><code>Joining, by = c(&quot;transecto&quot;, &quot;site&quot;, &quot;elev&quot;)
-Joining, by = c(&quot;transecto&quot;, &quot;site&quot;, &quot;elev&quot;)</code></pre>
-<pre><code>Joining, by = c(&quot;transecto&quot;, &quot;longitud&quot;, &quot;min_altitu&quot;, &quot;max_altitu&quot;, &quot;id_transecto&quot;, &quot;site&quot;, &quot;elev&quot;)</code></pre>
-<pre><code>Joining, by = c(&quot;transecto&quot;, &quot;site&quot;)</code></pre>
-<pre class="r"><code>write_csv(descriptivos, here::here(&quot;data/tabla_descriptivos.csv&quot;))</code></pre>
+    &quot;Total number of individuals&quot; = n_ind_total)
+
+write_csv(descriptivos, here::here(&quot;data/tabla_descriptivos.csv&quot;))</code></pre>
 <pre class="r"><code>descriptivos %&gt;% 
   kbl() %&gt;% 
   kable_styling()</code></pre>
