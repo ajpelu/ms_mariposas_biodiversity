@@ -1,0 +1,92 @@
+---
+title: "Tabla descriptivos"
+author: "ajpelu"
+date: "2022-01-18"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+
+```{r pkg}
+library(tidyverse)
+library(here)
+library(kableExtra)
+```
+
+- Read data
+
+```{r read-data}
+denraw <- read_csv(here::here("data/densidad_by_year.csv")) 
+divraw <- read_csv(here::here("data/diversidad_by_year.csv")) 
+riqraw <- read_csv(here::here("data/riqueza_by_year.csv"))
+richness <- read_csv(here::here("data/riqueza_by_site.csv"))
+transectos <- read_csv(here::here("data/transectos_tabla.csv"))
+```
+
+
+```{r}
+densidad_avg <- denraw %>%
+  group_by(transecto, site, elev) %>%
+  summarise(mean = mean(den, na.rm = TRUE),
+            sd = sd(den, na.rm = TRUE),
+            se = sd/sqrt(n()))
+
+diversidad_avg <- divraw %>%
+  group_by(transecto, site, elev) %>%
+  summarise(mean = mean(diversidad, na.rm = TRUE),
+            sd = sd(diversidad, na.rm = TRUE),
+            se = sd/sqrt(n()))
+
+abundancia <- denraw %>%
+  group_by(transecto, site) %>%
+  summarise(mean = round(mean(abundancia),2),
+            sd = sd(abundancia),
+            se = round(sd/sqrt(n()),2),
+            n_ind_total = sum(abundancia))
+```
+
+```{r}
+descriptivos <- 
+  transectos %>% inner_join(densidad_avg) %>%
+  dplyr::select(-sd) %>%
+  mutate(mean = round(mean, 2),
+         se = round(se,2)) %>%
+  unite("density", mean,se, sep = " ± ") %>% 
+  inner_join(diversidad_avg) %>%
+  dplyr::select(-sd) %>%
+  mutate(mean = round(mean, 2),
+         se = round(se,2)) %>%
+  unite("diversity", mean,se, sep = " ± ") %>%
+  inner_join(richness) %>%
+  rename(richness = riq) %>%
+  inner_join(abundancia) %>%
+  dplyr::select(-sd) %>%
+  unite("abundancia_media", mean,se, sep = " ± ") %>% 
+  unite("elev_rango", min_altitu, max_altitu, sep = "-") %>% 
+  rowwise() %>% 
+  mutate(elev_rango = paste0("(", elev_rango, ")")) %>% 
+  unite("Elevation", elev, elev_rango, sep=" ") %>% 
+  dplyr::select(
+    "Transect" = transecto,
+    "Code" = site,
+    Elevation,
+    "Length" = longitud,
+    "Abundance" = density,
+    "Diversity (H’)" = diversity,
+    "Richness" = richness,
+    "Mean number of individuals" = abundancia_media,
+    "Total number of individuals" = n_ind_total)
+
+write_csv(descriptivos, here::here("data/tabla_descriptivos.csv"))
+```
+
+
+```{r}
+descriptivos %>% 
+  kbl() %>% 
+  kable_styling()
+```
+
