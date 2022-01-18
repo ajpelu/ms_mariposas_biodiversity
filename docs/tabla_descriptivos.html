@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="ajpelu" />
+
+<meta name="date" content="2022-01-18" />
+
+<title>Tabla descriptivos</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ms_mariposas_biodiversity</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/ajpelu/ms_mariposas_biodiversity">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Tabla descriptivos</h1>
+<h4 class="author">ajpelu</h4>
+<h4 class="date">2022-01-18</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-01-18
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>ms_mariposas_biodiversity/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20211228code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20211228)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20211228code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20211228)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree8f1c7af353b812bb282268661dd76d848393da4ctargetblank8f1c7afa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/8f1c7af353b812bb282268661dd76d848393da4c" target="_blank">8f1c7af</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree8f1c7af353b812bb282268661dd76d848393da4ctargetblank8f1c7afa" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/8f1c7af353b812bb282268661dd76d848393da4c" target="_blank">8f1c7af</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  data/Tabla_variables_modelización_lepidópteros_ACTUALIZADO_2020.xlsx
+    Untracked:  data/tabla_descriptivos.csv
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/tabla_descriptivos.Rmd</code>) and HTML (<code>docs/tabla_descriptivos.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/8f1c7af353b812bb282268661dd76d848393da4c/analysis/tabla_descriptivos.Rmd" target="_blank">8f1c7af</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-18
+</td>
+<td>
+wflow_publish(“analysis/tabla_descriptivos.Rmd”)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+✓ tibble  3.1.2     ✓ dplyr   1.0.6
+✓ tidyr   1.1.3     ✓ stringr 1.4.0
+✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(here)</code></pre>
+<pre><code>here() starts at /Volumes/GoogleDrive/My Drive/MS/2021_MS_MARIPOSAS/ms_mariposas_biodiversity</code></pre>
+<pre class="r"><code>library(kableExtra)</code></pre>
+<pre><code>
+Attaching package: &#39;kableExtra&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    group_rows</code></pre>
+<ul>
+<li>Read data</li>
+</ul>
+<pre class="r"><code>denraw &lt;- read_csv(here::here(&quot;data/densidad_by_year.csv&quot;)) </code></pre>
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  id_transecto = col_character(),
+  transecto = col_character(),
+  site = col_character(),
+  elev = col_double(),
+  year = col_double(),
+  abundancia = col_double(),
+  long_total = col_double(),
+  den = col_double()
+)</code></pre>
+<pre class="r"><code>divraw &lt;- read_csv(here::here(&quot;data/diversidad_by_year.csv&quot;)) </code></pre>
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  diversidad = col_double(),
+  year = col_double(),
+  transecto = col_character(),
+  longitud = col_double(),
+  min_altitu = col_double(),
+  max_altitu = col_double(),
+  id_transecto = col_character(),
+  site = col_character(),
+  elev = col_double()
+)</code></pre>
+<pre class="r"><code>riqraw &lt;- read_csv(here::here(&quot;data/riqueza_by_year.csv&quot;))</code></pre>
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  transecto = col_character(),
+  year = col_double(),
+  riq = col_double(),
+  longitud = col_double(),
+  min_altitu = col_double(),
+  max_altitu = col_double(),
+  id_transecto = col_character(),
+  site = col_character(),
+  elev = col_double()
+)</code></pre>
+<pre class="r"><code>richness &lt;- read_csv(here::here(&quot;data/riqueza_by_site.csv&quot;))</code></pre>
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  transecto = col_character(),
+  riq = col_double(),
+  longitud = col_double(),
+  min_altitu = col_double(),
+  max_altitu = col_double(),
+  id_transecto = col_character(),
+  site = col_character(),
+  elev = col_double()
+)</code></pre>
+<pre class="r"><code>transectos &lt;- read_csv(here::here(&quot;data/transectos_tabla.csv&quot;))</code></pre>
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  transecto = col_character(),
+  longitud = col_double(),
+  min_altitu = col_double(),
+  max_altitu = col_double(),
+  id_transecto = col_character(),
+  site = col_character(),
+  elev = col_double()
+)</code></pre>
+<pre class="r"><code>densidad_avg &lt;- denraw %&gt;%
+  group_by(transecto, site, elev) %&gt;%
+  summarise(mean = mean(den, na.rm = TRUE),
+            sd = sd(den, na.rm = TRUE),
+            se = sd/sqrt(n()))</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;transecto&#39;, &#39;site&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>diversidad_avg &lt;- divraw %&gt;%
+  group_by(transecto, site, elev) %&gt;%
+  summarise(mean = mean(diversidad, na.rm = TRUE),
+            sd = sd(diversidad, na.rm = TRUE),
+            se = sd/sqrt(n()))</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;transecto&#39;, &#39;site&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>abundancia &lt;- denraw %&gt;%
+  group_by(transecto, site) %&gt;%
+  summarise(mean = round(mean(abundancia),2),
+            sd = sd(abundancia),
+            se = round(sd/sqrt(n()),2),
+            n_ind_total = sum(abundancia))</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;transecto&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>descriptivos &lt;- 
+  transectos %&gt;% inner_join(densidad_avg) %&gt;%
+  dplyr::select(-sd) %&gt;%
+  mutate(mean = round(mean, 2),
+         se = round(se,2)) %&gt;%
+  unite(&quot;density&quot;, mean,se, sep = &quot; ± &quot;) %&gt;% 
+  inner_join(diversidad_avg) %&gt;%
+  dplyr::select(-sd) %&gt;%
+  mutate(mean = round(mean, 2),
+         se = round(se,2)) %&gt;%
+  unite(&quot;diversity&quot;, mean,se, sep = &quot; ± &quot;) %&gt;%
+  inner_join(richness) %&gt;%
+  rename(richness = riq) %&gt;%
+  inner_join(abundancia) %&gt;%
+  dplyr::select(-sd) %&gt;%
+  unite(&quot;abundancia_media&quot;, mean,se, sep = &quot; ± &quot;) %&gt;% 
+  unite(&quot;elev_rango&quot;, min_altitu, max_altitu, sep = &quot;-&quot;) %&gt;% 
+  rowwise() %&gt;% 
+  mutate(elev_rango = paste0(&quot;(&quot;, elev_rango, &quot;)&quot;)) %&gt;% 
+  unite(&quot;Elevation&quot;, elev, elev_rango, sep=&quot; &quot;) %&gt;% 
+  dplyr::select(
+    &quot;Transect&quot; = transecto,
+    &quot;Code&quot; = site,
+    Elevation,
+    &quot;Length&quot; = longitud,
+    &quot;Abundance&quot; = density,
+    &quot;Diversity (H’)&quot; = diversity,
+    &quot;Richness&quot; = richness,
+    &quot;Mean number of individuals&quot; = abundancia_media,
+    &quot;Total number of individuals&quot; = n_ind_total)</code></pre>
+<pre><code>Joining, by = c(&quot;transecto&quot;, &quot;site&quot;, &quot;elev&quot;)
+Joining, by = c(&quot;transecto&quot;, &quot;site&quot;, &quot;elev&quot;)</code></pre>
+<pre><code>Joining, by = c(&quot;transecto&quot;, &quot;longitud&quot;, &quot;min_altitu&quot;, &quot;max_altitu&quot;, &quot;id_transecto&quot;, &quot;site&quot;, &quot;elev&quot;)</code></pre>
+<pre><code>Joining, by = c(&quot;transecto&quot;, &quot;site&quot;)</code></pre>
+<pre class="r"><code>write_csv(descriptivos, here::here(&quot;data/tabla_descriptivos.csv&quot;))</code></pre>
+<pre class="r"><code>descriptivos %&gt;% 
+  kbl() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Transect
+</th>
+<th style="text-align:left;">
+Code
+</th>
+<th style="text-align:left;">
+Elevation
+</th>
+<th style="text-align:right;">
+Length
+</th>
+<th style="text-align:left;">
+Abundance
+</th>
+<th style="text-align:left;">
+Diversity (H’)
+</th>
+<th style="text-align:right;">
+Richness
+</th>
+<th style="text-align:left;">
+Mean number of individuals
+</th>
+<th style="text-align:right;">
+Total number of individuals
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Altas cumbres
+</td>
+<td style="text-align:left;">
+AC
+</td>
+<td style="text-align:left;">
+3126 (3081-3170)
+</td>
+<td style="text-align:right;">
+3209
+</td>
+<td style="text-align:left;">
+0.47 ± 0.03
+</td>
+<td style="text-align:left;">
+1.02 ± 0.17
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:left;">
+82.12 ± 10.04
+</td>
+<td style="text-align:right;">
+657
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Barranco de San Juan
+</td>
+<td style="text-align:left;">
+BSJ
+</td>
+<td style="text-align:left;">
+1362 (1347-1377)
+</td>
+<td style="text-align:right;">
+453
+</td>
+<td style="text-align:left;">
+5.52 ± 0.63
+</td>
+<td style="text-align:left;">
+2.92 ± 0.05
+</td>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:left;">
+236.5 ± 38.17
+</td>
+<td style="text-align:right;">
+1892
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Borreguiles San Juan
+</td>
+<td style="text-align:left;">
+BOSJ
+</td>
+<td style="text-align:left;">
+2545 (2527-2563)
+</td>
+<td style="text-align:right;">
+2533
+</td>
+<td style="text-align:left;">
+2.38 ± 0.27
+</td>
+<td style="text-align:left;">
+2.49 ± 0.04
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:left;">
+378.38 ± 45.91
+</td>
+<td style="text-align:right;">
+3027
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Campos de Otero
+</td>
+<td style="text-align:left;">
+CO
+</td>
+<td style="text-align:left;">
+2248 (2178-2317)
+</td>
+<td style="text-align:right;">
+2992
+</td>
+<td style="text-align:left;">
+4.06 ± 0.48
+</td>
+<td style="text-align:left;">
+2.67 ± 0.04
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+986.12 ± 157.42
+</td>
+<td style="text-align:right;">
+7889
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Carihuela
+</td>
+<td style="text-align:left;">
+CAR
+</td>
+<td style="text-align:left;">
+2808 (2792-2824)
+</td>
+<td style="text-align:right;">
+387
+</td>
+<td style="text-align:left;">
+0.56 ± 0.1
+</td>
+<td style="text-align:left;">
+1.02 ± 0.14
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+9 ± 1.35
+</td>
+<td style="text-align:right;">
+72
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Catifas
+</td>
+<td style="text-align:left;">
+CAT
+</td>
+<td style="text-align:left;">
+1666 (1658-1673)
+</td>
+<td style="text-align:right;">
+483
+</td>
+<td style="text-align:left;">
+4.18 ± 0.27
+</td>
+<td style="text-align:left;">
+2.75 ± 0.07
+</td>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:left;">
+190.62 ± 22.05
+</td>
+<td style="text-align:right;">
+1525
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cauchiles
+</td>
+<td style="text-align:left;">
+CAU
+</td>
+<td style="text-align:left;">
+3203 (3196-3210)
+</td>
+<td style="text-align:right;">
+624
+</td>
+<td style="text-align:left;">
+1.08 ± 0.37
+</td>
+<td style="text-align:left;">
+1.41 ± 0.19
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+28.12 ± 5.59
+</td>
+<td style="text-align:right;">
+225
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dúrcal
+</td>
+<td style="text-align:left;">
+DU
+</td>
+<td style="text-align:left;">
+1950 (1913-1987)
+</td>
+<td style="text-align:right;">
+3563
+</td>
+<td style="text-align:left;">
+9.41 ± 0.99
+</td>
+<td style="text-align:left;">
+3.05 ± 0.04
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+3038.86 ± 331.97
+</td>
+<td style="text-align:right;">
+21272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fabriquilla
+</td>
+<td style="text-align:left;">
+FA
+</td>
+<td style="text-align:left;">
+992 (971-1013)
+</td>
+<td style="text-align:right;">
+415
+</td>
+<td style="text-align:left;">
+2.47 ± 0.25
+</td>
+<td style="text-align:left;">
+2.43 ± 0.06
+</td>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:left;">
+88.5 ± 18.88
+</td>
+<td style="text-align:right;">
+708
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Laguna Seca
+</td>
+<td style="text-align:left;">
+LS
+</td>
+<td style="text-align:left;">
+2282 (2257-2306)
+</td>
+<td style="text-align:right;">
+3044
+</td>
+<td style="text-align:left;">
+3.15 ± 0.46
+</td>
+<td style="text-align:left;">
+1.85 ± 0.1
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:left;">
+754.5 ± 119
+</td>
+<td style="text-align:right;">
+6036
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Laguna
+</td>
+<td style="text-align:left;">
+LP
+</td>
+<td style="text-align:left;">
+732 (726-739)
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:left;">
+3.95 ± 0.35
+</td>
+<td style="text-align:left;">
+0.96 ± 0.13
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+193.14 ± 22.83
+</td>
+<td style="text-align:right;">
+1352
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Matas Verdes
+</td>
+<td style="text-align:left;">
+MV
+</td>
+<td style="text-align:left;">
+1919 (1851-1987)
+</td>
+<td style="text-align:right;">
+2672
+</td>
+<td style="text-align:left;">
+5.23 ± 0.61
+</td>
+<td style="text-align:left;">
+2.87 ± 0.12
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+1277.25 ± 168.91
+</td>
+<td style="text-align:right;">
+10218
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Loma de Papeles Alto
+</td>
+<td style="text-align:left;">
+PA
+</td>
+<td style="text-align:left;">
+2400 (2338-2463)
+</td>
+<td style="text-align:right;">
+3068
+</td>
+<td style="text-align:left;">
+2.49 ± 0.34
+</td>
+<td style="text-align:left;">
+2.23 ± 0.07
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:left;">
+592.75 ± 103.02
+</td>
+<td style="text-align:right;">
+4742
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Loma de Papeles Bajo
+</td>
+<td style="text-align:left;">
+PB
+</td>
+<td style="text-align:left;">
+2121 (2052-2190)
+</td>
+<td style="text-align:right;">
+2743
+</td>
+<td style="text-align:left;">
+1.95 ± 0.15
+</td>
+<td style="text-align:left;">
+2.58 ± 0.05
+</td>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:left;">
+448 ± 49.25
+</td>
+<td style="text-align:right;">
+3584
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pitres
+</td>
+<td style="text-align:left;">
+PI
+</td>
+<td style="text-align:left;">
+1379 (1283-1475)
+</td>
+<td style="text-align:right;">
+2671
+</td>
+<td style="text-align:left;">
+4.51 ± 0.35
+</td>
+<td style="text-align:left;">
+2.85 ± 0.04
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+979.14 ± 84.37
+</td>
+<td style="text-align:right;">
+6854
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Praillos
+</td>
+<td style="text-align:left;">
+PRA
+</td>
+<td style="text-align:left;">
+1894 (1887-1900)
+</td>
+<td style="text-align:right;">
+366
+</td>
+<td style="text-align:left;">
+4.61 ± 0.45
+</td>
+<td style="text-align:left;">
+2.94 ± 0.09
+</td>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:left;">
+156 ± 23.14
+</td>
+<td style="text-align:right;">
+1248
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Purche
+</td>
+<td style="text-align:left;">
+PU
+</td>
+<td style="text-align:left;">
+1442 (1387-1496)
+</td>
+<td style="text-align:right;">
+2758
+</td>
+<td style="text-align:left;">
+5.67 ± 0.77
+</td>
+<td style="text-align:left;">
+2.83 ± 0.06
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+1303.88 ± 235.67
+</td>
+<td style="text-align:right;">
+10431
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Robledal de Dilar
+</td>
+<td style="text-align:left;">
+DI
+</td>
+<td style="text-align:left;">
+1720 (1673-1767)
+</td>
+<td style="text-align:right;">
+2725
+</td>
+<td style="text-align:left;">
+5.78 ± 0.52
+</td>
+<td style="text-align:left;">
+2.93 ± 0.13
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:left;">
+1402.38 ± 150.25
+</td>
+<td style="text-align:right;">
+11219
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sabinas
+</td>
+<td style="text-align:left;">
+SA
+</td>
+<td style="text-align:left;">
+2180 (2177-2184)
+</td>
+<td style="text-align:right;">
+289
+</td>
+<td style="text-align:left;">
+3.28 ± 0.51
+</td>
+<td style="text-align:left;">
+2.42 ± 0.06
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:left;">
+76 ± 11.82
+</td>
+<td style="text-align:right;">
+608
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Turbera
+</td>
+<td style="text-align:left;">
+TU
+</td>
+<td style="text-align:left;">
+745 (723-767)
+</td>
+<td style="text-align:right;">
+2754
+</td>
+<td style="text-align:left;">
+1.4 ± 0.31
+</td>
+<td style="text-align:left;">
+1.7 ± 0.09
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:left;">
+364.14 ± 67.13
+</td>
+<td style="text-align:right;">
+2549
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.2 (2020-06-22)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.3
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] kableExtra_1.3.1 here_1.0.1       forcats_0.5.1    stringr_1.4.0   
+ [5] dplyr_1.0.6      purrr_0.3.4      readr_1.4.0      tidyr_1.1.3     
+ [9] tibble_3.1.2     ggplot2_3.3.5    tidyverse_1.3.1  workflowr_1.7.0 
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.7        lubridate_1.7.10  getPass_0.2-2     ps_1.5.0         
+ [5] assertthat_0.2.1  rprojroot_2.0.2   digest_0.6.27     utf8_1.1.4       
+ [9] R6_2.5.1          cellranger_1.1.0  backports_1.2.1   reprex_2.0.0     
+[13] evaluate_0.14     highr_0.8         httr_1.4.2        pillar_1.6.1     
+[17] rlang_0.4.12      readxl_1.3.1      rstudioapi_0.13   whisker_0.4      
+[21] callr_3.7.0       jquerylib_0.1.3   rmarkdown_2.8     webshot_0.5.2    
+[25] munsell_0.5.0     broom_0.7.9       compiler_4.0.2    httpuv_1.5.5     
+[29] modelr_0.1.8      xfun_0.23         pkgconfig_2.0.3   htmltools_0.5.2  
+[33] tidyselect_1.1.1  viridisLite_0.4.0 fansi_0.4.2       crayon_1.4.1     
+[37] dbplyr_2.1.1      withr_2.4.1       later_1.1.0.1     grid_4.0.2       
+[41] jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.1   DBI_1.1.1        
+[45] git2r_0.28.0      magrittr_2.0.1    scales_1.1.1.9000 cli_2.5.0        
+[49] stringi_1.7.4     fs_1.5.0          promises_1.2.0.1  xml2_1.3.2       
+[53] bslib_0.2.4       ellipsis_0.3.2    generics_0.1.0    vctrs_0.3.8      
+[57] tools_4.0.2       glue_1.4.2        hms_1.0.0         processx_3.5.1   
+[61] fastmap_1.1.0     yaml_2.2.1        colorspace_2.0-2  rvest_1.0.0      
+[65] knitr_1.31        haven_2.3.1       sass_0.3.1       </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
