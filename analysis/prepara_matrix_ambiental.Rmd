@@ -1,0 +1,171 @@
+---
+title: "Prepara matriz de datos ambientales"
+author: "ajpelu"
+date: "2022-01-18"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE
+)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(here)
+library(corrplot)
+library(corrr)
+library(factoextra)
+```
+
+
+- Prepare data 
+
+```{r}
+rawdata <- readxl::read_excel(here::here("data/Tabla_variables_2012_2020.xls")) %>% dplyr::select(-contains("LS_B"), 
+                -contains("MT_"), 
+                -LS_NDVI, 
+                -FR_OLIVO, -FR_EUCAL, 
+                -FR_URBAN, -FR_AGUA,
+                -FR_VIASC, -FR_CULTI,
+                -DS_VIASC, -DS_URBAN, 
+                -DS_LAGIN, -DS_AGUA, 
+                -DS_RIOS, -DS_CULTI) %>% 
+  rename(Pp_oto = "Precipitación Otoños",
+         Pp_inv = "Precipitación Inviernos",
+         PP_pri = "Precipitación Primaveras",
+         Pp_ver = "Precipitación Veranos",
+         tmed_oto = "Temperatura media Otoños",
+         tmed_inv = "Temperatura media Inviernos",
+         tmed_pri = "Temperatura media Primaveras",
+         tmed_ver = "Temperatura media Veranos") 
+
+
+# Mean of Annual precipitation
+pp_anu_year <- rawdata %>% 
+  dplyr::select(Abreviatura, contains("Acumulado ANUAL")) %>% 
+  rowwise() %>% 
+  mutate(m = mean(c_across(where(is.numeric)))) %>% 
+  dplyr::select(Abreviatura, Pp_anu = m)
+
+# Average of Mean temperature
+temp_anu_year <- rawdata %>% 
+  dplyr::select(Abreviatura, contains("Temperatura media")) %>% 
+  rowwise() %>% 
+  mutate(m = mean(c_across(where(is.numeric)))) %>% 
+  dplyr::select(Abreviatura, temp_anu = m)
+
+
+env <- rawdata %>% 
+  inner_join(temp_anu_year) %>% 
+  inner_join(pp_anu_year) %>% 
+  dplyr::select(-contains("Temperatura media")) %>% 
+  dplyr::select(-contains("Acumulado ANUAL")) %>% 
+  rename(elev = "Elevación")
+```
+
+
+## Correlation bewteen variables
+
+```{r}
+# Escalamos las variables 
+env_selecccion <- env %>% 
+  dplyr::select(-Transecto, -Id_transect, -Abreviatura, -Longitud)
+
+env.scale <- scale(env_selecccion)
+
+# correlaciones 
+env.correlations <- cor(env.scale) # res
+symnum(env.correlations , abbr.colnames = FALSE) %>% kbl()
+dfdis <- dist(env.correlations, method = "euclidean")
+```
+
+- Generamos un plot de correlaciones
+
+```{r}
+cor.mtest <- function(mat, ...) {
+    mat <- as.matrix(mat)
+    n <- ncol(mat)
+    p.mat<- matrix(NA, n, n)
+    diag(p.mat) <- 0
+    for (i in 1:(n - 1)) {
+        for (j in (i + 1):n) {
+            tmp <- cor.test(mat[, i], mat[, j], ...)
+            p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+        }
+    }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  p.mat
+}
+
+p.mat <- cor.mtest(env.scale)
+
+corrplot::corrplot(env.correlations, type = "upper", tl.col = "black", tl.srt = 90, tl.cex = 0.4,
+         p.mat = p.mat, sig.level = 0.05, 
+         insig = "blank", 
+         diag = FALSE)
+
+```
+
+
+```{r}
+pdf(here::here("figs/correlation_env_variables_numbers.pdf"))
+corrplot::corrplot(env.correlations, method = "number",
+                   type = "upper", tl.col = "black", 
+                   col= "black", tl.srt = 90, tl.cex = 0.35, 
+                   number.cex = .3, number.digits = 2,
+         diag = FALSE)
+dev.off()
+
+pdf(here::here("figs/correlation_env_variables.pdf"))
+corrplot::corrplot(env.correlations, type = "upper",
+                   tl.col = "black", tl.srt = 90, tl.cex = 0.4,
+         p.mat = p.mat, sig.level = 0.05, 
+         insig = "blank", 
+         diag = FALSE)
+dev.off()
+```
+
+- Table of correlations
+```{r}
+dfscale_corrr <- correlate(env.scale)
+dfscale_corrr %>% shave(upper = FALSE) %>%
+  fashion() %>% kbl()
+```
+
+- Hierarchical cluster
+
+```{r}
+# library("pvclust")
+# fit <- hclust(dfdis, method="ward")
+# plot(fit, cex = .6)
+# 33 Variables 
+# Vamos a probar a reducir a 10
+h <- hcut(dfdis, k=14)
+dendro <- fviz_dend(h, rect = TRUE, horiz = TRUE, lwd = 0.5, cex = .5)
+dendro
+ggsave(here::here("figs/dendrograma_env.pdf"), 
+       height = 7, width = 5, device = "pdf")
+```
+
+## Selección final de variables
+
+```{r}
+variables_sel <- c("Pp_anu", "TP_PEND", "FR_MATDE", 
+             "TP_SU_NO", "FR_QUERC", "FR_CONIF", 
+             "TP_RSH_V", "HIDRO_ITH", "temp_anu",
+             "TP_RSD_P", "Pp_ver", "TP_ES_OE", "TP_EXPO",
+             "DS_ARBOL", "elev")
+
+env_seleccionadas <- env %>% dplyr::select(Transecto,Id_transect,Abreviatura, matches(variables_sel)) 
+
+
+write_csv(env_seleccionadas, here::here("data/matrix_env_variables_selected.csv"))
+```
