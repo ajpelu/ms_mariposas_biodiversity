@@ -9,6 +9,14 @@ editor_options:
 
 ## Introduction
 
+- Genera tabla de descriptivos 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE
+)
+```
+
 
 ```{r pkg}
 library(tidyverse)
