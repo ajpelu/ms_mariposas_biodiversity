@@ -71,6 +71,8 @@ transectos <- metadata_transectos %>%
   rowwise() %>% 
   mutate(elev = round(((min_altitu+max_altitu)/2),0)) %>% 
   rename(transecto = name)
+
+write_csv(transectos, here::here("data/transectos_tabla.csv"))
 ```
 
 ### Total contactos transecto y año
@@ -224,5 +226,22 @@ write_csv(riq, here::here("data/riqueza_by_year.csv"))
 
 ```{r view-riqueza}
 datatable(riq)
+```
+
+```{r}
+riq_site <- d %>% 
+  filter(!(year == 2018 & !id_transecto %in% c("16_45","16_46","16_48","16_49"))) %>% 
+  filter(nombre_cientifico %in% especies$nombre_cientifico) %>% 
+  mutate(sp = stringr::word(nombre_cientifico, start = 1, end = 2)) %>% 
+  mutate(spabrev = stringr::str_replace(sp," ", ".")) %>% 
+  dplyr::select(-sp) %>%
+  group_by(transecto) %>% 
+  summarise(sp_unique = unique(spabrev)) %>% 
+  group_by(transecto) %>% 
+  count() %>% 
+  rename(riq = n) %>% 
+  inner_join(transectos) 
+
+write_csv(riq_site, here::here("data/riqueza_by_site.csv"))
 ```
 
