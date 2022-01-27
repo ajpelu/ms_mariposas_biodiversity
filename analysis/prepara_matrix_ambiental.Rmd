@@ -75,7 +75,7 @@ env <- rawdata %>%
 - climate data 
 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library("xlsx")
 rawclimate <- readxl::read_excel(
   here::here('data/Tabla_variables_modelización_lepidópteros_ACTUALIZADO_2020.xlsx'),

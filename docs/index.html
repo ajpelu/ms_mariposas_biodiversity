@@ -287,7 +287,7 @@ $(document).ready(function () {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -296,7 +296,7 @@ $(document).ready(function () {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -305,10 +305,10 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-01-18
+<strong>Last updated:</strong> 2022-01-28
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>ms_mariposas_biodiversity/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -324,28 +324,28 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytreea6ada18731a93adb8a85dd20b7964fbe17a98b83targetblanka6ada18a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/a6ada18731a93adb8a85dd20b7964fbe17a98b83" target="_blank">a6ada18</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree04d5a3b9880bed7c3c69c20457cda9e6cf1f07e8targetblank04d5a3ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/04d5a3b9880bed7c3c69c20457cda9e6cf1f07e8" target="_blank">04d5a3b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytreea6ada18731a93adb8a85dd20b7964fbe17a98b83targetblanka6ada18a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree04d5a3b9880bed7c3c69c20457cda9e6cf1f07e8targetblank04d5a3ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/a6ada18731a93adb8a85dd20b7964fbe17a98b83" target="_blank">a6ada18</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/04d5a3b9880bed7c3c69c20457cda9e6cf1f07e8" target="_blank">04d5a3b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -355,15 +355,12 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
-Untracked files:
-    Untracked:  analysis/prepara_matrix_ambiental.Rmd
-    Untracked:  data/Tabla_variables_2012_2020.xls
-    Untracked:  data/Tabla_variables_modelización_lepidópteros_ACTUALIZADO_2020.xlsx
-    Untracked:  data/matrix_env_variables_selected.csv
-    Untracked:  data/tabla_descriptivos.csv
-    Untracked:  figs/correlation_env_variables.pdf
-    Untracked:  figs/correlation_env_variables_numbers.pdf
-    Untracked:  figs/dendrograma_env.pdf
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/prepara_matrix_ambiental.Rmd
+    Modified:   figs/correlation_env_variables.pdf
+    Modified:   figs/correlation_env_variables_numbers.pdf
+    Modified:   figs/dendrograma_env.pdf
 
 </code></pre>
 <p>
@@ -402,6 +399,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/c814af88247f17591bcd377f339617cd594c5d8d/analysis/index.Rmd" target="_blank">c814af8</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-18
+</td>
+<td>
+fix error link ambientales
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_biodiversity/80b023bae08445a6c005e9a54dd8909413590db0/docs/index.html" target="_blank">80b023b</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -603,7 +634,8 @@ Start workflowr project.
 <li><p><a href="prepara_datos_mariposas.html">Prepara los datos de diversidad, abundancia y riqueza</a>.</p></li>
 <li><p><a href="plot_variables_elevation.html">Variación de riqueza, diversidad y abundancia con la elevación</a></p></li>
 <li><p><a href="tabla_descriptivos.html">Tabla de Descriptivos</a></p></li>
-<li><p><a href="prepara_matrix_ambiental.html">Prepara la matrix de datos ambientales</a>.</p></li>
+<li><p><a href="prepara_datos_ambientales.html">Prepara la matrix de datos ambientales</a>.</p></li>
+<li><p><a href="modeliza.html">Modelos</a>.</p></li>
 </ul>
 </div>
 <div id="otras-cosas" class="section level2">

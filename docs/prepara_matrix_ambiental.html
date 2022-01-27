@@ -369,7 +369,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -378,7 +378,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -387,10 +387,10 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-01-18
+<strong>Last updated:</strong> 2022-01-28
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>ms_mariposas_biodiversity/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -406,12 +406,12 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -478,16 +478,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree0050d21b1de14f1545b51b7e4c954a7172d6d0catargetblank0050d21a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/0050d21b1de14f1545b51b7e4c954a7172d6d0ca" target="_blank">0050d21</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree04d5a3b9880bed7c3c69c20457cda9e6cf1f07e8targetblank04d5a3ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/04d5a3b9880bed7c3c69c20457cda9e6cf1f07e8" target="_blank">04d5a3b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree0050d21b1de14f1545b51b7e4c954a7172d6d0catargetblank0050d21a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree04d5a3b9880bed7c3c69c20457cda9e6cf1f07e8targetblank04d5a3ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/0050d21b1de14f1545b51b7e4c954a7172d6d0ca" target="_blank">0050d21</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/04d5a3b9880bed7c3c69c20457cda9e6cf1f07e8" target="_blank">04d5a3b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -498,8 +498,10 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Unstaged changes:
-    Modified:   analysis/index.Rmd
-    Deleted:    analysis/prepara_datos_ambientales.Rmd
+    Modified:   analysis/prepara_matrix_ambiental.Rmd
+    Modified:   figs/correlation_env_variables.pdf
+    Modified:   figs/correlation_env_variables_numbers.pdf
+    Modified:   figs/dendrograma_env.pdf
 
 </code></pre>
 <p>
@@ -538,6 +540,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/04d5a3b9880bed7c3c69c20457cda9e6cf1f07e8/analysis/prepara_matrix_ambiental.Rmd" target="_blank">04d5a3b</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-28
+</td>
+<td>
+modelling
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_biodiversity/e9e4d40787dcb097f7732fc3bcfb571b39d71dc3/docs/prepara_matrix_ambiental.html" target="_blank">e9e4d40</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -632,6 +668,101 @@ env &lt;- rawdata %&gt;%
   dplyr::select(-contains(&quot;Temperatura media&quot;)) %&gt;% 
   dplyr::select(-contains(&quot;Acumulado ANUAL&quot;)) %&gt;% 
   rename(elev = &quot;Elevación&quot;)</code></pre>
+<ul>
+<li>climate data</li>
+</ul>
+<pre class="r"><code>library(&quot;xlsx&quot;)
+rawclimate &lt;- readxl::read_excel(
+  here::here(&#39;data/Tabla_variables_modelización_lepidópteros_ACTUALIZADO_2020.xlsx&#39;),
+  sheet = 2, col_types = c(&quot;guess&quot;,&quot;guess&quot;, &quot;guess&quot;, rep(&quot;numeric&quot;, 169)))
+ 
+pp_inv_year &lt;- rawclimate  %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Precipitación Invierno&quot;)) %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Acumulado&quot;)) %&gt;% 
+  pivot_longer(-Id_transect, names_to = c(&quot;year&quot;, &quot;remove&quot;),
+               values_to = &quot;p_inv_year&quot;,
+               names_prefix = &quot;Precipitación Invierno&quot;, 
+               names_transform = list(year = as.integer),
+               names_pattern = &quot;(.*) (Acumulado trimestre)&quot;) %&gt;% 
+  dplyr::select(-remove)
+
+pp_pri_year &lt;- rawclimate %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Precipitación Primavera&quot;)) %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Acumulado&quot;)) %&gt;% 
+  pivot_longer(-Id_transect, names_to = c(&quot;year&quot;, &quot;remove&quot;),
+               values_to = &quot;p_pri_year&quot;,
+               names_prefix = &quot;Precipitación Primavera&quot;,
+               names_transform = list(year = as.integer),
+               names_pattern = &quot;(.*) (Acumulado trimestre)&quot;) %&gt;% 
+  dplyr::select(-remove)
+
+pp_ver_year &lt;- rawclimate %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Precipitación Verano&quot;)) %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Acumulado&quot;)) %&gt;% 
+  pivot_longer(-Id_transect, names_to = c(&quot;year&quot;, &quot;remove&quot;),
+               values_to = &quot;p_ver_year&quot;,
+               names_prefix = &quot;Precipitación Verano&quot;, 
+               names_transform = list(year = as.integer),
+               names_pattern = &quot;(.*) (Acumulado trimestre)&quot;) %&gt;% 
+  dplyr::select(-remove)
+
+pp_oto_year &lt;- rawclimate %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Precipitación Otoño&quot;)) %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Acumulado&quot;)) %&gt;% 
+  pivot_longer(-Id_transect, names_to = c(&quot;year&quot;, &quot;remove&quot;),
+               values_to = &quot;p_oto_year&quot;,
+               names_prefix = &quot;Precipitación Otoño&quot;, 
+               names_transform = list(year = as.integer),
+               names_pattern = &quot;(.*) (Acumulado trimestre)&quot;) %&gt;% 
+  dplyr::select(-remove)
+
+pp_anu_year &lt;- rawclimate %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Acumulado ANUAL&quot;)) %&gt;% 
+  pivot_longer(-Id_transect, names_to = c(&quot;year&quot;, &quot;remove&quot;),
+               names_prefix = &quot;Precipitación&quot;, 
+               values_to = &quot;p_anu_year&quot;,
+               names_transform = list(year = as.integer),
+               names_pattern = &quot;(.*) (Acumulado ANUAL)&quot;) %&gt;% 
+  dplyr::select(-remove)
+pp_season &lt;- pp_anu_year %&gt;% 
+  inner_join(pp_pri_year) %&gt;% 
+  inner_join(pp_ver_year) %&gt;% 
+  inner_join(pp_oto_year) %&gt;%  
+  inner_join(pp_inv_year) 
+
+
+t_inv_year &lt;- rawclimate %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Temperatura Invierno&quot;)) %&gt;% 
+  pivot_longer(-Id_transect, names_to = c(&quot;year&quot;),
+               values_to = &quot;t_inv_year&quot;,
+               names_prefix = &quot;Temperatura Invierno&quot;, 
+               names_transform = list(year = as.integer)) 
+t_ver_year &lt;- rawclimate %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Temperatura Verano&quot;)) %&gt;% 
+  pivot_longer(-Id_transect, names_to = c(&quot;year&quot;),
+               values_to = &quot;t_ver_year&quot;,
+               names_prefix = &quot;Temperatura Verano&quot;, 
+               names_transform = list(year = as.integer)) 
+t_pri_year &lt;- rawclimate %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Temperatura Primavera&quot;)) %&gt;% 
+  pivot_longer(-Id_transect, names_to = c(&quot;year&quot;),
+               values_to = &quot;t_pri_year&quot;,
+               names_prefix = &quot;Temperatura Primavera&quot;, 
+               names_transform = list(year = as.integer)) 
+t_oto_year &lt;- rawclimate %&gt;% 
+  dplyr::select(Id_transect, contains(&quot;Temperatura Otoño&quot;)) %&gt;% 
+  pivot_longer(-Id_transect, names_to = c(&quot;year&quot;),
+               values_to = &quot;t_oto_year&quot;,
+               names_prefix = &quot;Temperatura Otoño&quot;, 
+               names_transform = list(year = as.integer)) 
+t_year &lt;- t_pri_year %&gt;% 
+  inner_join(t_ver_year) %&gt;% 
+  inner_join(t_oto_year) %&gt;%  
+  inner_join(t_inv_year) %&gt;% 
+  rowwise() %&gt;% 
+  mutate(t_anual = mean(t_pri_year, t_oto_year, t_inv_year, t_ver_year))</code></pre>
+<pre class="r"><code>climate_year &lt;- pp_season %&gt;% inner_join(t_year)
+write_csv(climate_year, here::here(&quot;data/climate_year.csv&quot;))</code></pre>
 </div>
 <div id="correlation-bewteen-variables" class="section level2">
 <h2>Correlation bewteen variables</h2>
@@ -3450,7 +3581,7 @@ corrplot::corrplot(env.correlations, type = &quot;upper&quot;, tl.col = &quot;bl
          p.mat = p.mat, sig.level = 0.05, 
          insig = &quot;blank&quot;, 
          diag = FALSE)</code></pre>
-<p><img src="figure/prepara_matrix_ambiental.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/prepara_matrix_ambiental.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>pdf(here::here(&quot;figs/correlation_env_variables_numbers.pdf&quot;))
 corrplot::corrplot(env.correlations, method = &quot;number&quot;,
                    type = &quot;upper&quot;, tl.col = &quot;black&quot;, 
@@ -6469,7 +6600,7 @@ dendro &lt;- fviz_dend(h, rect = TRUE, horiz = TRUE, lwd = 0.5, cex = .5)</code>
 <pre><code>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
 &quot;none&quot;)` instead.</code></pre>
 <pre class="r"><code>dendro</code></pre>
-<p><img src="figure/prepara_matrix_ambiental.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/prepara_matrix_ambiental.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggsave(here::here(&quot;figs/dendrograma_env.pdf&quot;), 
        height = 7, width = 5, device = &quot;pdf&quot;)</code></pre>
 </div>
@@ -6508,36 +6639,35 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] kableExtra_1.3.1 factoextra_1.0.7 corrr_0.4.3      corrplot_0.84   
- [5] here_1.0.1       janitor_2.1.0    readxl_1.3.1     forcats_0.5.1   
- [9] stringr_1.4.0    dplyr_1.0.6      purrr_0.3.4      readr_1.4.0     
-[13] tidyr_1.1.3      tibble_3.1.2     ggplot2_3.3.5    tidyverse_1.3.1 
-[17] workflowr_1.7.0 
+ [1] xlsx_0.6.5       kableExtra_1.3.1 factoextra_1.0.7 corrr_0.4.3     
+ [5] corrplot_0.84    here_1.0.1       janitor_2.1.0    readxl_1.3.1    
+ [9] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.6      purrr_0.3.4     
+[13] readr_1.4.0      tidyr_1.1.3      tibble_3.1.2     ggplot2_3.3.5   
+[17] tidyverse_1.3.1 
 
 loaded via a namespace (and not attached):
  [1] fs_1.5.0          lubridate_1.7.10  webshot_0.5.2     httr_1.4.2       
  [5] rprojroot_2.0.2   tools_4.0.2       backports_1.2.1   bslib_0.2.4      
  [9] utf8_1.1.4        R6_2.5.1          DBI_1.1.1         colorspace_2.0-2 
-[13] withr_2.4.1       tidyselect_1.1.1  gridExtra_2.3     processx_3.5.1   
-[17] curl_4.3          compiler_4.0.2    git2r_0.28.0      textshaping_0.3.2
-[21] cli_2.5.0         rvest_1.0.0       xml2_1.3.2        labeling_0.4.2   
-[25] sass_0.3.1        scales_1.1.1.9000 callr_3.7.0       systemfonts_1.0.0
-[29] digest_0.6.27     foreign_0.8-81    rmarkdown_2.8     rio_0.5.16       
-[33] pkgconfig_2.0.3   htmltools_0.5.2   dbplyr_2.1.1      fastmap_1.1.0    
-[37] highr_0.8         rlang_0.4.12      rstudioapi_0.13   farver_2.1.0     
-[41] jquerylib_0.1.3   generics_0.1.0    jsonlite_1.7.2    zip_2.1.1        
-[45] car_3.0-10        dendextend_1.14.0 magrittr_2.0.1    Rcpp_1.0.7       
-[49] munsell_0.5.0     fansi_0.4.2       abind_1.4-5       viridis_0.5.1    
-[53] lifecycle_1.0.1   stringi_1.7.4     whisker_0.4       yaml_2.2.1       
-[57] carData_3.0-4     snakecase_0.11.0  grid_4.0.2        promises_1.2.0.1 
-[61] ggrepel_0.9.1     crayon_1.4.1      haven_2.3.1       hms_1.0.0        
-[65] knitr_1.31        ps_1.5.0          pillar_1.6.1      ggpubr_0.4.0     
-[69] ggsignif_0.6.0    reprex_2.0.0      glue_1.4.2        evaluate_0.14    
-[73] getPass_0.2-2     data.table_1.14.0 modelr_0.1.8      vctrs_0.3.8      
-[77] httpuv_1.5.5      cellranger_1.1.0  gtable_0.3.0      assertthat_0.2.1 
-[81] openxlsx_4.2.3    xfun_0.23         broom_0.7.9       rstatix_0.6.0    
-[85] later_1.1.0.1     ragg_1.1.1        viridisLite_0.4.0 cluster_2.1.0    
-[89] ellipsis_0.3.2   </code></pre>
+[13] withr_2.4.1       tidyselect_1.1.1  gridExtra_2.3     curl_4.3         
+[17] compiler_4.0.2    git2r_0.28.0      textshaping_0.3.2 cli_2.5.0        
+[21] rvest_1.0.0       xml2_1.3.2        labeling_0.4.2    sass_0.3.1       
+[25] scales_1.1.1.9000 systemfonts_1.0.0 digest_0.6.27     foreign_0.8-81   
+[29] rmarkdown_2.8     rio_0.5.16        pkgconfig_2.0.3   htmltools_0.5.2  
+[33] dbplyr_2.1.1      fastmap_1.1.0     highr_0.8         rlang_0.4.12     
+[37] rstudioapi_0.13   farver_2.1.0      jquerylib_0.1.3   generics_0.1.0   
+[41] jsonlite_1.7.2    zip_2.1.1         car_3.0-10        dendextend_1.14.0
+[45] magrittr_2.0.1    Rcpp_1.0.7        munsell_0.5.0     fansi_0.4.2      
+[49] abind_1.4-5       viridis_0.5.1     lifecycle_1.0.1   stringi_1.7.4    
+[53] whisker_0.4       yaml_2.2.1        carData_3.0-4     snakecase_0.11.0 
+[57] grid_4.0.2        promises_1.2.0.1  ggrepel_0.9.1     crayon_1.4.1     
+[61] haven_2.3.1       xlsxjars_0.6.1    hms_1.0.0         knitr_1.31       
+[65] pillar_1.6.1      ggpubr_0.4.0      ggsignif_0.6.0    reprex_2.0.0     
+[69] glue_1.4.2        evaluate_0.14     data.table_1.14.0 modelr_0.1.8     
+[73] vctrs_0.3.8       httpuv_1.5.5      cellranger_1.1.0  gtable_0.3.0     
+[77] assertthat_0.2.1  openxlsx_4.2.3    xfun_0.23         broom_0.7.9      
+[81] rstatix_0.6.0     later_1.1.0.1     ragg_1.1.1        viridisLite_0.4.0
+[85] rJava_0.9-13      workflowr_1.7.0   cluster_2.1.0     ellipsis_0.3.2   </code></pre>
 </div>
 </div>
 
