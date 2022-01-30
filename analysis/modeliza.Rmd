@@ -31,6 +31,8 @@ library(kableExtra)
 library(visreg)
 library(tab)
 library(MASS)
+library(equatiomatic)
+library(report)
 ```
 
 
@@ -407,6 +409,13 @@ write.csv(tc, here::here("data/mod_den_coefficients.csv"))
 tc %>% kbl() %>% kable_styling()
 ```
 
+```{r}
+extract_eq(modelo_densidad, wrap = TRUE, intercept = "beta", use_coefs = TRUE)
+```
+
+```{r}
+report::report(modelo_densidad)
+```
 
 
 
@@ -552,6 +561,15 @@ write.csv(tc, here::here("data/mod_div_coefficients.csv"))
 
 ```{r}
 tc %>% kbl() %>% kable_styling()
+```
+
+
+```{r}
+extract_eq(modelo_diversidad, wrap = TRUE, intercept = "beta", use_coefs = TRUE)
+```
+
+```{r}
+report::report(modelo_diversidad)
 ```
 
 
@@ -706,4 +724,12 @@ tc %>% kbl() %>% kable_styling()
 ```
 
 
+
+```{r}
+extract_eq(modelo_riqueza, wrap = TRUE, intercept = "beta", use_coefs = TRUE)
+```
+
+```{r}
+report::report(modelo_riqueza)
+```
 
