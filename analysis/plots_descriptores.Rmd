@@ -1,0 +1,181 @@
+---
+title: "plots_descriptores"
+author: "ajpelu"
+date: "2022-01-30"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE
+)
+```
+
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(here)
+library(patchwork)
+library(vegan)
+library(performance)
+library(kableExtra)
+library(visreg)
+library(MASS)
+```
+
+- Prepara datos 
+
+```{r}
+diversidad_year <- read_csv(here::here("data/diversidad_by_year.csv"))
+riqueza_year <- read_csv(here::here("data/riqueza_by_year.csv"))
+densidad_year <- read_csv(here::here("data/densidad_by_year.csv"))
+
+env <- read_csv(here::here("data/matrix_env_variables_selected.csv")) %>% 
+  dplyr::select(-elev, -temp_anu, -Pp_ver, -Pp_anu)
+climate_year <- read_csv(here::here("data/climate_year.csv")) %>% 
+  dplyr::select(Id_transect, year, p_anu_year, p_ver_year, t_anu_year = t_anual) 
+
+
+m <- riqueza_year %>% 
+  inner_join(diversidad_year) %>% 
+  inner_join(densidad_year) %>% 
+  dplyr::select(-longitud, -min_altitu, -max_altitu, -long_total, -abundancia) %>% 
+  unite("id", c("id_transecto", "year")) %>% 
+  inner_join(
+    (climate_year %>% unite("id", c("Id_transect", "year"), remove = FALSE)),
+    by="id") %>% 
+  inner_join(env) %>% 
+  rowwise() %>% 
+  mutate(FR_ARBOL = sum(FR_CONIF, FR_QUERC)) %>% 
+  rename(div = diversidad) %>% 
+  relocate(transecto, id, Id_transect, site, elev,year) %>% 
+  dplyr::select(-Transecto, -Abreviatura)
+```
+
+## Modelos
+
+```{r}
+modelo_densidad <- glm(den ~ 1 + FR_MATDE + HIDRO_ITH + DS_ARBOL, 
+                       family = Gamma(link ="log"), data = m)
+
+modelo_diversidad <- glm(div ~ 1 + FR_MATDE + HIDRO_ITH + TP_ES_OE + DS_ARBOL, data = m)
+
+modelo_riqueza <- glm(riq ~ 1 + elev + FR_MATDE + TP_RSH_V + HIDRO_ITH + TP_RSD_P + TP_ES_OE + TP_EXPO, data = m)
+```
+
+- Density 
+```{r}
+d_FR_MATDE <- visreg(modelo_densidad, ylab = "", "FR_MATDE", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+d_DS_ARBOL <- visreg(modelo_densidad, ylab = "", "DS_ARBOL", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+d_HIDRO_ITH <- visreg(modelo_densidad, ylab = "", "HIDRO_ITH", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+```
+
+- Diveristy
+
+```{r}
+di_FR_MATDE <- visreg(modelo_diversidad, ylab = "", "FR_MATDE", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+
+di_DS_ARBOL <- visreg(modelo_diversidad, ylab = "", "DS_ARBOL", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+di_HIDRO_ITH <- visreg(modelo_diversidad, ylab = "", "HIDRO_ITH", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+di_TP_ES_OE <- visreg(modelo_diversidad, ylab = "", "TP_ES_OE", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+```
+
+- Richness
+
+```{r}
+r_FR_MATDE <- visreg(modelo_riqueza, ylab = "", "FR_MATDE", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+r_elev <- visreg(modelo_riqueza, ylab = "", "elev", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+r_TP_RSH_V <- visreg(modelo_riqueza, ylab = "", "TP_RSH_V", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+r_HIDRO_ITH <- visreg(modelo_riqueza, ylab = "", "HIDRO_ITH", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+r_TP_RSD_P <- visreg(modelo_riqueza, ylab = "", "TP_RSD_P", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+r_TP_ES_OE <- visreg(modelo_riqueza, ylab = "", "TP_ES_OE", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+
+r_TP_EXPO <- visreg(modelo_riqueza, ylab = "", "TP_EXPO", 
+                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+```
+
+
+- All plots
+
+```{r}
+plot_den <- d_FR_MATDE / (d_DS_ARBOL + labs(y="Abundance")) / d_HIDRO_ITH / plot_spacer() 
+
+plot_div <- di_FR_MATDE / (di_DS_ARBOL + labs(y="Diversity")) / di_HIDRO_ITH / di_TP_ES_OE 
+
+plot_rich <- r_FR_MATDE / r_HIDRO_ITH / r_elev / (r_TP_ES_OE + labs(y="Richness")) / r_TP_EXPO / r_TP_RSD_P / r_TP_RSH_V 
+ 
+
+den_div <- plot_den | plot_div 
+
+```
+
+
+```{r}
+ggsave(here::here("figs/predictors_den_div.pdf"),
+       device = "pdf",
+       width = 6, height = 7)
+den_div
+dev.off()
+
+
+ggsave(plot= den_div,
+       here::here("figs/predictors_den_div.png"),
+       device = "png",
+       dpi = 300,
+       width = 6, height = 7)
+```
+
+```{r}
+plot_rich_a <- r_FR_MATDE / (r_HIDRO_ITH + labs(y="Richness")) / r_elev / r_TP_ES_OE 
+  
+plot_rich_b <- r_TP_EXPO / r_TP_RSD_P / r_TP_RSH_V / plot_spacer() 
+ 
+plot_rich_ab <- plot_rich_a | plot_rich_b 
+```
+
+
+```{r}
+ggsave(here::here("figs/predictors_rich.pdf"),
+       device = "pdf",
+       width = 6, height = 7)
+plot_rich_ab
+dev.off()
+
+
+ggsave(plot= plot_rich_ab,
+       here::here("figs/predictors_den_div.png"),
+       device = "png",
+       dpi = 300,
+       width = 6, height = 7)
+```
