@@ -12,7 +12,7 @@ Este repositorio contiene los datos y los análisis sobre biodiversidad de lepid
 
 ## Estructura del repositorio
 
-* [Prepara los datos de diversidad, abundancia y riqueza](prepara_datos_mariposas.html). 
+* [Prepara los datos de diversidad, abundancia y riqueza](prepara_datos_mariposas.html)
 
 * [Variación de riqueza, diversidad y abundancia con la elevación](plot_variables_elevation.html)
 
