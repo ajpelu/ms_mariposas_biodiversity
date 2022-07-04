@@ -121,7 +121,6 @@ env <- read_csv(here::here("data/matrix_env_variables_selected.csv")) %>%
 climate_year <- read_csv(here::here("data/climate_year.csv")) %>% 
   dplyr::select(Id_transect, year, p_anu_year, p_ver_year, t_anu_year = t_anual) 
 
-
 m <- riqueza_year %>% 
   inner_join(diversidad_year) %>% 
   inner_join(densidad_year) %>% 
@@ -141,12 +140,12 @@ m <- riqueza_year %>%
 
 ## Exploración y selección de variables
 #### Correlaciones 
-```{r}
+```{r, eval=FALSE}
 
 co <- correlation((m %>% dplyr::select(p_anu_year:FR_ARBOL)))
 
 co %>% summary() %>% 
-  plot(size_point = .5, 
+  corrplot(size_point = .5, 
        show_values = TRUE,
        show_p = TRUE,
        show_legend = FALSE,
@@ -233,7 +232,7 @@ myvars <- m %>%
   dplyr::select(-transecto, -id, -Id_transect, -site, -year, 
                 -riq, -div, -den, 
                 -elev, -FR_QUERC, -FR_CONIF, 
-                -TP_SU_NO, -TP_PEND, -FR_ARBOL) %>% names()
+                -TP_SU_NO, -TP_PEND, -FR_ARBOL, -TP_ES_OE) %>% names()
 
 corvif(m[,myvars])
 ```
@@ -244,7 +243,7 @@ m %>%
   dplyr::select(-transecto, -id, -Id_transect, -site, -year, 
                 -riq, -div, -den, 
                 -t_anu_year, -FR_QUERC, -FR_CONIF, 
-                -TP_SU_NO, -TP_PEND, -FR_ARBOL) %>% names()
+                -TP_SU_NO, -TP_PEND, -FR_ARBOL, -TP_ES_OE) %>% names()
 ```
 
 ```{r}
@@ -253,7 +252,7 @@ nobs_var <- nrow(m)/
  dplyr::select(-transecto, -id, -Id_transect, -site, -year, 
                 -riq, -div, -den, 
                 -t_anu_year, -FR_QUERC, -FR_CONIF, 
-                -TP_SU_NO, -TP_PEND, -FR_ARBOL))
+                -TP_SU_NO, -TP_PEND, -FR_ARBOL, -TP_ES_OE))
 ```
 
 Algunos hablan de tener entre 15 - 25 veces el numero de observaciones por cada covariable. Actualmente tenemos `r nobs_var`
@@ -281,7 +280,7 @@ fden <- as.formula(
           m %>% dplyr::select(-transecto, -id, -Id_transect, -site, -year, 
                 -riq, -div, -den, 
                 -t_anu_year, -FR_QUERC, -FR_CONIF, 
-                -TP_SU_NO, -TP_PEND, -FR_ARBOL)), collapse = "+"),
+                -TP_SU_NO, -TP_PEND, -FR_ARBOL, -TP_ES_OE)), collapse = "+"),
       sep = "~")
   )
 ```
@@ -442,7 +441,7 @@ fdiv <- as.formula(
                 -riq, -div, -den, 
                 -t_anu_year, -FR_QUERC, -FR_CONIF, 
                 -TP_SU_NO, -TP_PEND, -FR_ARBOL, 
-                -TP_EXPO, -p_anu_year, -p_ver_year)), collapse = "+"),
+                -TP_EXPO, -TP_ES_OE, -p_anu_year, -p_ver_year)), collapse = "+"),
       sep = "~")
   )
 ```
@@ -519,7 +518,7 @@ select_fdiv@formulas[[2]]
 
 
 ```{r}
-modelo_diversidad <- glm(div ~ 1 + FR_MATDE + HIDRO_ITH + TP_ES_OE + DS_ARBOL, data = m)
+modelo_diversidad <- glm(div ~ 1 + FR_MATDE + HIDRO_ITH + DS_ARBOL, data = m)
 
 ```
 
@@ -534,8 +533,8 @@ visreg(modelo_diversidad, scale="response", partial=TRUE,
 visreg(modelo_diversidad, scale="response", partial=TRUE,
        ylab = ytitle, "HIDRO_ITH", xlab = "HIDRO_ITH")
 
-visreg(modelo_diversidad, scale="response", partial=TRUE,
-       ylab = ytitle, "TP_ES_OE", xlab = "TP_ES_OE")
+#visreg(modelo_diversidad, scale="response", partial=TRUE,
+#       ylab = ytitle, "TP_ES_OE", xlab = "TP_ES_OE")
 
 visreg(modelo_diversidad, scale="response", partial=TRUE,
        ylab = ytitle, "DS_ARBOL", xlab = "DS_ARBOL")
@@ -596,7 +595,7 @@ friq <- as.formula(
           m %>% dplyr::select(-transecto, -id, -Id_transect, -site, -year, 
                 -riq, -div, -den, 
                 -t_anu_year, -FR_QUERC, -FR_CONIF, 
-                -TP_SU_NO, -TP_PEND, -FR_ARBOL, 
+                -TP_SU_NO, -TP_ES_OE, -TP_PEND, -FR_ARBOL, 
                 -p_anu_year, -p_ver_year)), collapse = "+"),
       sep = "~")
   )
@@ -669,7 +668,7 @@ select_friq@formulas[[1]]
 
 
 ```{r}
-modelo_riqueza <- glm(riq ~ 1 + elev + FR_MATDE + TP_RSH_V + HIDRO_ITH + TP_RSD_P + TP_ES_OE + TP_EXPO, data = m)
+modelo_riqueza <- glm(riq ~ 1 + elev + FR_MATDE + TP_RSH_V + HIDRO_ITH + TP_RSD_P + TP_EXPO, data = m)
 
 ```
 
@@ -693,8 +692,8 @@ visreg(modelo_riqueza, scale="response", partial=TRUE,
 visreg(modelo_riqueza, scale="response", partial=TRUE,
        ylab = ytitle, "TP_RSD_P", xlab = "TP_RSD_P")
 
-visreg(modelo_riqueza, scale="response", partial=TRUE,
-       ylab = ytitle, "TP_ES_OE", xlab = "TP_ES_OE")
+# visreg(modelo_riqueza, scale="response", partial=TRUE,
+#        ylab = ytitle, "TP_ES_OE", xlab = "TP_ES_OE")
 
 visreg(modelo_riqueza, scale="response", partial=TRUE,
        ylab = ytitle, "TP_EXPO", xlab = "TP_EXPO")
