@@ -1,0 +1,92 @@
+---
+title: "prepara_tabla_suplementaria"
+author: "ajpelu"
+date: "2022-07-08"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+- Genera tabla suplementaria 
+
+- Los datos provienen del script (prepara datos mariposas)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, warning = FALSE
+)
+```
+
+
+```{r pkg}
+library(tidyverse)
+library(here)
+library(kableExtra)
+library(writexl)
+library(ggforce)
+```
+
+```{r}
+ts <- read_csv(here::here("data/tabla_especies_transectos.csv"))
+```
+
+## Figura contactos vs. elevation by specie 
+```{r}
+p <- ts %>% 
+  ggplot(aes(x=elev, y=contactos)) + geom_bar(stat="identity", width = 30, 
+                                              fill="#2ca25f", colour="#2ca25f") + 
+  # geom_point(aes(y=contactos)) +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    panel.background = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_text(size = 6), 
+    axis.text.y = element_text(size = 6)) +
+  xlab("Elevation (m)") + ylab("Records") +
+  facet_wrap_paginate(~nombre_cientifico, ncol=3, nrow = 8, page=5, scales = "free_y") 
+
+n <- n_pages(p)
+
+
+pdf(here::here('figs/contactos_elevation_by_sp.pdf'), paper= 'A4', w= 210/25.4, 297/25.4)
+for(i in 1:n){
+    print(p + facet_wrap_paginate(~nombre_cientifico, 
+                                  ncol=3, nrow = 8, scales = "free_y",
+                                  page = i))
+}
+dev.off()
+
+```
+
+
+# Tabla 
+
+```{r}
+tablita <- ts %>% dplyr::select(site, nombre_cientifico, contactos) %>% 
+  pivot_wider(names_from = site, values_from = contactos) %>% 
+  rowwise() %>% 
+  mutate(ntransectos_contacted = sum(!is.na(c_across(where(is.numeric)))))
+
+
+elevation_by_transect <- ts %>% dplyr::select(elev, nombre_cientifico, contactos) %>% 
+  group_by(nombre_cientifico) %>% 
+  summarise(elev_min = min(elev, na.rm = FALSE),
+            elev_max = max(elev, na.rm = FALSE))
+
+supp_table <- tablita %>% inner_join(elevation_by_transect) %>% arrange(nombre_cientifico)
+
+write_xlsx(supp_table, here::here("data/supplementary_species.xlsx"))
+```
+
+```{r}
+supp_table %>% 
+  dplyr::select(nombre_cientifico,
+                ntransectos_contacted, 
+                elev_min, elev_max) %>% 
+    kbl() %>% 
+  kable_styling()
+```
+
