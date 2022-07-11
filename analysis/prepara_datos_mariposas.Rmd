@@ -26,6 +26,7 @@ library(here)
 library(lubridate)
 library(DT)
 library(vegan)
+library(writexl)
 ```
 
 ## Preparación de datos 
@@ -205,6 +206,7 @@ write_csv(diversidad, here::here("data/diversidad_by_year.csv"))
 datatable(diversidad)
 ```
 
+
 ### Riqueza
 
 ```{r compute-riqueza}
@@ -244,4 +246,77 @@ riq_site <- d %>%
 
 write_csv(riq_site, here::here("data/riqueza_by_site.csv"))
 ```
+
+### Tabla suplementaria especies - transectos 
+
+```{r}
+ts <- d %>% 
+  filter(!(year == 2018 & !id_transecto %in% c("16_45","16_46","16_48","16_49"))) %>% 
+  filter(nombre_cientifico %in% especies$nombre_cientifico) %>% 
+  group_by(transecto, nombre_cientifico, year) %>% 
+  summarise(n_ind = sum(total)) %>% 
+  pivot_wider(names_from = year, 
+              values_from=n_ind, 
+              names_prefix = "y", values_fill = 0) %>% as.data.frame() %>% 
+  inner_join(transectos) %>% 
+  rowwise() %>% 
+  mutate(contactos = sum(across(starts_with("y")))) %>% 
+  mutate(n_years_contacted = 9 - sum(across(starts_with("y")) == 0)) # Número total de años (9) - años con cero contactos
+      
+write_csv(ts, here::here("data/tabla_especies_transectos.csv"))                           
+```
+
+### Species accumulation curve 
+
+```{r}
+curvas_spec <- data.frame()
+
+for (i in unique(m$transecto)) {
+  aux <- m %>% filter(transecto==i) %>% 
+    relocate(y2018, .after=y2017) %>% 
+    ungroup() %>% dplyr::select(-transecto) %>% 
+    pivot_longer(-spabrev, names_to = "year", values_to = "nind") %>% 
+    pivot_wider(names_from = spabrev, values_from = nind) %>% column_to_rownames("year") %>%
+    as.data.frame()
+  
+  sca <- vegan::specaccum(aux, method = "collector")
+  
+  sca_random <- vegan::specaccum(aux, method = "random", permutations = 499)
+
+  s <- data.frame(richness = sca_random$richness,
+                  sd = sca_random$sd,
+                  sites = sca_random$sites, 
+                  richness_real = sca$richness,
+                  years = seq(2012,2020,1))
+  
+  rownames(s) <- NULL 
+  s$transecto <- i 
+
+  curvas_spec <- rbind(curvas_spec, s)
+}            
+
+
+plot_curvas <- curvas_spec %>% 
+  ggplot(aes(x=years, y=richness)) + 
+  theme_minimal() + 
+  geom_ribbon(aes(ymin = richness - 1.96*sd, ymax = richness + 1.96*sd), fill="lightblue", alpha =.5) + 
+  geom_line(colour = "blue") + 
+  geom_line(aes(y=richness_real), col = "black") + 
+  facet_wrap(~transecto, scales = "free_y", ncol = 4) +
+  xlab('year') + ylab('Richness') + 
+  theme(panel.grid.minor = element_blank())
+
+```
+
+
+```{r}
+ggsave(here::here("figs/plot_species_acumulation_area.pdf"),
+       device = "pdf",
+       width = 12, height = 11)
+plot_curvas 
+dev.off()
+
+```
+
+
 
