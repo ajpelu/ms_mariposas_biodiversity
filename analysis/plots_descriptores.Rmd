@@ -65,9 +65,9 @@ m <- riqueza_year %>%
 modelo_densidad <- glm(den ~ 1 + FR_MATDE + HIDRO_ITH + DS_ARBOL, 
                        family = Gamma(link ="log"), data = m)
 
-modelo_diversidad <- glm(div ~ 1 + FR_MATDE + HIDRO_ITH + TP_ES_OE + DS_ARBOL, data = m)
+modelo_diversidad <- glm(div ~ 1 + FR_MATDE + HIDRO_ITH + DS_ARBOL, data = m)
 
-modelo_riqueza <- glm(riq ~ 1 + elev + FR_MATDE + TP_RSH_V + HIDRO_ITH + TP_RSD_P + TP_ES_OE + TP_EXPO, data = m)
+modelo_riqueza <- glm(riq ~ 1 + elev + FR_MATDE + TP_RSH_V + HIDRO_ITH + TP_RSD_P + TP_EXPO, data = m)
 ```
 
 - Density 
@@ -95,8 +95,8 @@ di_DS_ARBOL <- visreg(modelo_diversidad, ylab = "", "DS_ARBOL",
 di_HIDRO_ITH <- visreg(modelo_diversidad, ylab = "", "HIDRO_ITH", 
                      scale="response", partial=TRUE, gg=TRUE) + theme_bw()
 
-di_TP_ES_OE <- visreg(modelo_diversidad, ylab = "", "TP_ES_OE", 
-                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+# di_TP_ES_OE <- visreg(modelo_diversidad, ylab = "", "TP_ES_OE", 
+#                      scale="response", partial=TRUE, gg=TRUE) + theme_bw()
 
 ```
 
@@ -117,9 +117,9 @@ r_HIDRO_ITH <- visreg(modelo_riqueza, ylab = "", "HIDRO_ITH",
 
 r_TP_RSD_P <- visreg(modelo_riqueza, ylab = "", "TP_RSD_P", 
                      scale="response", partial=TRUE, gg=TRUE) + theme_bw()
-
-r_TP_ES_OE <- visreg(modelo_riqueza, ylab = "", "TP_ES_OE", 
-                     scale="response", partial=TRUE, gg=TRUE) + theme_bw()
+# 
+# r_TP_ES_OE <- visreg(modelo_riqueza, ylab = "", "TP_ES_OE", 
+#                      scale="response", partial=TRUE, gg=TRUE) + theme_bw()
 
 r_TP_EXPO <- visreg(modelo_riqueza, ylab = "", "TP_EXPO", 
                      scale="response", partial=TRUE, gg=TRUE) + theme_bw()
@@ -129,11 +129,11 @@ r_TP_EXPO <- visreg(modelo_riqueza, ylab = "", "TP_EXPO",
 - All plots
 
 ```{r}
-plot_den <- d_FR_MATDE / (d_DS_ARBOL + labs(y="Abundance")) / d_HIDRO_ITH / plot_spacer() 
+plot_den <- d_FR_MATDE / (d_HIDRO_ITH + labs(y="Abundance")) / d_DS_ARBOL  
 
-plot_div <- di_FR_MATDE / (di_DS_ARBOL + labs(y="Diversity")) / di_HIDRO_ITH / di_TP_ES_OE 
+plot_div <- di_FR_MATDE / (di_HIDRO_ITH + labs(y="Diversity")) / di_DS_ARBOL  
 
-plot_rich <- r_FR_MATDE / r_HIDRO_ITH / r_elev / (r_TP_ES_OE + labs(y="Richness")) / r_TP_EXPO / r_TP_RSD_P / r_TP_RSH_V 
+plot_rich <- r_FR_MATDE / r_HIDRO_ITH / (r_elev + labs(y="Richness")) / r_TP_EXPO / r_TP_RSD_P / r_TP_RSH_V 
  
 
 den_div <- plot_den | plot_div 
@@ -157,9 +157,9 @@ ggsave(plot= den_div,
 ```
 
 ```{r}
-plot_rich_a <- r_FR_MATDE / (r_HIDRO_ITH + labs(y="Richness")) / r_elev / r_TP_ES_OE 
+plot_rich_a <- r_FR_MATDE / (r_HIDRO_ITH + labs(y="Richness")) / r_elev 
   
-plot_rich_b <- r_TP_EXPO / r_TP_RSD_P / r_TP_RSH_V / plot_spacer() 
+plot_rich_b <- r_TP_EXPO / r_TP_RSD_P / r_TP_RSH_V 
  
 plot_rich_ab <- plot_rich_a | plot_rich_b 
 ```
