@@ -27,6 +27,7 @@ library(lubridate)
 library(DT)
 library(vegan)
 library(writexl)
+library(iNEXT)
 ```
 
 ## Preparación de datos 
@@ -317,6 +318,72 @@ plot_curvas
 dev.off()
 
 ```
+
+
+### Curvas Rarefaccion 
+
+```{r, echo=FALSE}
+# Ver esto https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.12613 
+# http://chao.stat.nthu.edu.tw/wordpress/wp-content/uploads/software/iNEXT_UserGuide.pdf 
+# https://ciespinosa.github.io/AlphaDiversidad/rarefaccion.html#rarefaccion-basada-en-individuos 
+```
+
+```{r}
+mm <- m %>% 
+  inner_join(
+    transectos %>% dplyr::select(transecto, site)) %>%
+  relocate(y2018, .after=y2017) %>% 
+  ungroup() %>% rowwise() %>% 
+  mutate(abun = sum(across(starts_with("y")))) %>% 
+  dplyr::select(site, spabrev, abun) %>% 
+  pivot_wider(names_from = site, values_from = abun, values_fill = 0) %>% 
+  column_to_rownames("spabrev") %>% as.data.frame()
+
+f <- iNEXT(mm, datatype = "abundance")
+df <-  fortify(f, type = 1)
+
+
+df.point <- df[which(df$method=="observed"),]
+df.line <- df[which(df$method!="observed"),]
+df.line$method <- factor(df.line$method,
+ c("interpolated", "extrapolated"),
+ c("interpolation", "extrapolation"))
+
+plot_rarefy <- df %>% 
+  ggplot(aes(x=x, y=y)) + 
+  geom_point(size=2, data=df.point) +
+  geom_line(aes(linetype=method), data=df.line) +
+ geom_ribbon(aes(ymin=y.lwr, ymax=y.upr, 
+                 colour=NULL), alpha=0.2) + 
+  facet_wrap(~site, nrow = 5, scales = "free") +
+  theme_minimal() +
+  xlab("Number of individuals") + 
+  ylab("Species Diversity") +
+  theme(legend.position = "bottom",
+        legend.title=element_blank(),
+        text=element_text(size=12)) 
+```  
+  
+```{r}
+plot_rarefy
+```
+
+```{r}
+ggsave(here::here("figs/plot_rarefaction.pdf"),
+       device = "pdf",
+       width = 12, height = 11)
+plot_rarefy 
+dev.off()
+```
+
+
+
+
+
+
+
+
+
 
 
 
