@@ -30,6 +30,8 @@ library(ggforce)
 
 ```{r}
 ts <- read_csv(here::here("data/tabla_especies_transectos.csv"))
+tsall <- read_csv(here::here("data/tabla_taxones_transectos.csv"))
+
 ```
 
 ## Figura contactos vs. elevation by specie 
@@ -90,3 +92,25 @@ supp_table %>%
   kable_styling()
 ```
 
+## All taxones
+```{r}
+tablita_all <- tsall %>% dplyr::select(site, nombre_cientifico, contactos) %>% 
+  pivot_wider(names_from = site, values_from = contactos) %>% 
+  rowwise() %>% 
+  mutate(ntransectos_contacted = sum(!is.na(c_across(where(is.numeric)))))
+
+
+elevation_by_transect <- tsall %>% dplyr::select(elev, nombre_cientifico, contactos) %>% 
+  group_by(nombre_cientifico) %>% 
+  summarise(elev_min = min(elev, na.rm = FALSE),
+            elev_max = max(elev, na.rm = FALSE))
+
+supp_table_all <- tablita_all %>% inner_join(elevation_by_transect) %>% arrange(nombre_cientifico)
+
+write_xlsx(supp_table_all, here::here("data/supplementary_taxones.xlsx"))
+
+```
+
+```{r}
+
+```
