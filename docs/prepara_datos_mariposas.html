@@ -532,15 +532,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree3f62ed0fda85db31076b123bba271f8a592f24cctargetblank3f62ed0a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree7ef7a0e055c2e7e1c2cf8d034e3b17aa2d760418targetblank7ef7a0ea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/3f62ed0fda85db31076b123bba271f8a592f24cc" target="_blank">3f62ed0</a>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/7ef7a0e055c2e7e1c2cf8d034e3b17aa2d760418" target="_blank">7ef7a0e</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree3f62ed0fda85db31076b123bba271f8a592f24cctargetblank3f62ed0a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree7ef7a0e055c2e7e1c2cf8d034e3b17aa2d760418targetblank7ef7a0ea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -550,7 +550,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/3f62ed0fda85db31076b123bba271f8a592f24cc" target="_blank">3f62ed0</a>.
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/7ef7a0e055c2e7e1c2cf8d034e3b17aa2d760418" target="_blank">7ef7a0e</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -568,10 +568,8 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
-Untracked files:
-    Untracked:  figs/plot_rarefaction.pdf
-
 Unstaged changes:
+    Modified:   figs/plot_rarefaction.pdf
     Modified:   figs/plot_species_acumulation_area.pdf
 
 </code></pre>
@@ -619,6 +617,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/7ef7a0e055c2e7e1c2cf8d034e3b17aa2d760418/analysis/prepara_datos_mariposas.Rmd" target="_blank">7ef7a0e</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-07-12
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_biodiversity/9471064ee504398b36cc5321a0c4f1f7fb34f105/docs/prepara_datos_mariposas.html" target="_blank">9471064</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-07-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1045,7 +1077,21 @@ class="section level3">
   mutate(contactos = sum(across(starts_with(&quot;y&quot;)))) %&gt;% 
   mutate(n_years_contacted = 9 - sum(across(starts_with(&quot;y&quot;)) == 0)) # Número total de años (9) - años con cero contactos
       
-write_csv(ts, here::here(&quot;data/tabla_especies_transectos.csv&quot;))                           </code></pre>
+write_csv(ts, here::here(&quot;data/tabla_especies_transectos.csv&quot;))                 
+
+tsall &lt;- d %&gt;% 
+  filter(!(year == 2018 &amp; !id_transecto %in% c(&quot;16_45&quot;,&quot;16_46&quot;,&quot;16_48&quot;,&quot;16_49&quot;))) %&gt;% 
+  group_by(transecto, nombre_cientifico, year) %&gt;% 
+  summarise(n_ind = sum(total)) %&gt;% 
+  pivot_wider(names_from = year, 
+              values_from=n_ind, 
+              names_prefix = &quot;y&quot;, values_fill = 0) %&gt;% as.data.frame() %&gt;% 
+  inner_join(transectos) %&gt;% 
+  rowwise() %&gt;% 
+  mutate(contactos = sum(across(starts_with(&quot;y&quot;)))) %&gt;% 
+  mutate(n_years_contacted = 9 - sum(across(starts_with(&quot;y&quot;)) == 0)) 
+
+write_csv(tsall, here::here(&quot;data/tabla_taxones_transectos.csv&quot;))</code></pre>
 </div>
 <div id="species-accumulation-curve" class="section level3">
 <h3>Species accumulation curve</h3>
@@ -1168,11 +1214,85 @@ plot_rarefy &lt;- df %&gt;%
         text=element_text(size=12)) </code></pre>
 <pre class="r"><code>plot_rarefy</code></pre>
 <p><img src="figure/prepara_datos_mariposas.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/9471064ee504398b36cc5321a0c4f1f7fb34f105/docs/figure/prepara_datos_mariposas.Rmd/unnamed-chunk-7-1.png" target="_blank">9471064</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggsave(here::here(&quot;figs/plot_rarefaction.pdf&quot;),
        device = &quot;pdf&quot;,
        width = 12, height = 11)
 plot_rarefy </code></pre>
 <p><img src="figure/prepara_datos_mariposas.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/9471064ee504398b36cc5321a0c4f1f7fb34f105/docs/figure/prepara_datos_mariposas.Rmd/unnamed-chunk-8-1.png" target="_blank">9471064</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dev.off()</code></pre>
 <pre><code>null device 
           1 </code></pre>
