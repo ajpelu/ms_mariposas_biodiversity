@@ -264,7 +264,21 @@ ts <- d %>%
   mutate(contactos = sum(across(starts_with("y")))) %>% 
   mutate(n_years_contacted = 9 - sum(across(starts_with("y")) == 0)) # Número total de años (9) - años con cero contactos
       
-write_csv(ts, here::here("data/tabla_especies_transectos.csv"))                           
+write_csv(ts, here::here("data/tabla_especies_transectos.csv"))                 
+
+tsall <- d %>% 
+  filter(!(year == 2018 & !id_transecto %in% c("16_45","16_46","16_48","16_49"))) %>% 
+  group_by(transecto, nombre_cientifico, year) %>% 
+  summarise(n_ind = sum(total)) %>% 
+  pivot_wider(names_from = year, 
+              values_from=n_ind, 
+              names_prefix = "y", values_fill = 0) %>% as.data.frame() %>% 
+  inner_join(transectos) %>% 
+  rowwise() %>% 
+  mutate(contactos = sum(across(starts_with("y")))) %>% 
+  mutate(n_years_contacted = 9 - sum(across(starts_with("y")) == 0)) 
+
+write_csv(tsall, here::here("data/tabla_taxones_transectos.csv"))
 ```
 
 ### Species accumulation curve 
