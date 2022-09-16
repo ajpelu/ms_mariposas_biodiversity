@@ -24,7 +24,7 @@ Este repositorio contiene los datos y los análisis sobre biodiversidad de lepid
 
 * [Gráficos descriptores modelos](plots_descriptores.html)
 
-* [Gráficos correlaciones](plots_correlations.html)
+* [Gráficos correlaciones](plot_correlations.html)
 
 ## Otras cosas
 * Petición de JMBA sobre [datos de diversidad, abundancia y riqueza de todo el periodo](prepara_datos_mariposas_all_years.html). También se pueden ver los plots asociados a esos datos (*e.g.* Variación de riqueza, diversidad y abundancia con la elevación) [aquí](plot_variables_elevation_all_years.html)
