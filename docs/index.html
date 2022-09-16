@@ -13,8 +13,8 @@
 
 <title>Home</title>
 
-<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -72,6 +72,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -92,6 +93,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -244,7 +248,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -287,7 +291,9 @@ $(document).ready(function () {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -296,7 +302,9 @@ $(document).ready(function () {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -305,17 +313,27 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-01-30
+<strong>Last updated:</strong> 2022-09-16
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>ms_mariposas_biodiversity/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>ms_mariposas_biodiversity/</code>
+<span class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -324,45 +342,152 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree985339a76a710b144492ffebedb474a4a2b7b576targetblank985339aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/985339a76a710b144492ffebedb474a4a2b7b576" target="_blank">985339a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree3847382be6eb6d47d36e487f54daf9421991cbc6targetblank3847382a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/3847382be6eb6d47d36e487f54daf9421991cbc6" target="_blank">3847382</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree985339a76a710b144492ffebedb474a4a2b7b576targetblank985339aa" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree3847382be6eb6d47d36e487f54daf9421991cbc6targetblank3847382a"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/985339a76a710b144492ffebedb474a4a2b7b576" target="_blank">985339a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/3847382be6eb6d47d36e487f54daf9421991cbc6" target="_blank">3847382</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/.DS_Store
 
 Untracked files:
-    Untracked:  figs/predictors_den_div.pdf
-    Untracked:  figs/predictors_den_div.png
-    Untracked:  figs/predictors_rich.pdf
+    Untracked:  data/Density.aux.xml
+    Untracked:  data/Diversity_v2.aux.xml
+    Untracked:  data/Richness.aux.xml
+    Untracked:  data/density.ovr
+    Untracked:  data/density/
+    Untracked:  data/diversity_v2.ovr
+    Untracked:  data/diversity_v2/
+    Untracked:  data/richness.ovr
+    Untracked:  data/richness_v2.aux.xml
+    Untracked:  data/richness_v2/
+    Untracked:  figs/cor_den_div_np.png
+    Untracked:  figs/cor_den_div_p.png
+    Untracked:  figs/cor_den_rich_np.png
+    Untracked:  figs/cor_den_rich_p.png
+    Untracked:  figs/cor_div_ric_np.png
+    Untracked:  figs/cor_div_ric_p.png
+
+Unstaged changes:
+    Modified:   .Rprofile
+    Modified:   .gitattributes
+    Modified:   .gitignore
+    Modified:   CITATION.cff
+    Modified:   README.md
+    Modified:   _workflowr.yml
+    Modified:   analysis/_site.yml
+    Modified:   analysis/about.Rmd
+    Modified:   analysis/license.Rmd
+    Modified:   analysis/modeliza.Rmd
+    Modified:   analysis/plot_variables_elevation.Rmd
+    Modified:   analysis/plot_variables_elevation_all_years.Rmd
+    Modified:   analysis/plots_descriptores.Rmd
+    Modified:   analysis/prepara_datos_mariposas.Rmd
+    Modified:   analysis/prepara_datos_mariposas_all_years.Rmd
+    Modified:   analysis/prepara_matrix_ambiental.Rmd
+    Modified:   analysis/tabla_descriptivos.Rmd
+    Modified:   analysis/tabla_suplementaria.Rmd
+    Modified:   code/README.md
+    Modified:   data/Mariposas_2008_2021.xlsx
+    Modified:   data/README.md
+    Modified:   data/Tabla_variables_2012_2020.xls
+    Modified:   data/Tabla_variables_modelización_lepidópteros_ACTUALIZADO_2020.xlsx
+    Modified:   data/climate_year.csv
+    Modified:   data/densidad_by_year.csv
+    Modified:   data/densidad_by_year_alldata.csv
+    Modified:   data/diversidad_by_year.csv
+    Modified:   data/diversidad_by_year_alldata.csv
+    Modified:   data/longitud_transectos.xlsx
+    Modified:   data/mariposas_diurnas_contactos_transectos.csv
+    Modified:   data/mariposas_diurnas_visitas.csv
+    Modified:   data/matrix_env_variables_selected.csv
+    Modified:   data/mod_den_coefficients.csv
+    Modified:   data/mod_den_selectionBIC.csv
+    Modified:   data/mod_div_coefficients.csv
+    Modified:   data/mod_div_selectionBIC.csv
+    Modified:   data/mod_riq_coefficients.csv
+    Modified:   data/mod_riq_selectionBIC.csv
+    Modified:   data/riqueza_by_site.csv
+    Modified:   data/riqueza_by_year.csv
+    Modified:   data/riqueza_by_year_alldata.csv
+    Modified:   data/supplementary_species.xlsx
+    Modified:   data/supplementary_taxones.xlsx
+    Modified:   data/tabla_4-v2.xlsx
+    Modified:   data/tabla_descriptivos.csv
+    Modified:   data/tabla_especies_transectos.csv
+    Modified:   data/tabla_taxones_transectos.csv
+    Modified:   data/transect_abrev.csv
+    Modified:   data/transectos_tabla.csv
+    Modified:   figs/contactos_elevation_by_sp.pdf
+    Modified:   figs/correlation_env_variables.pdf
+    Modified:   figs/correlation_env_variables_numbers.pdf
+    Modified:   figs/dendrograma_env.pdf
+    Modified:   figs/plot_rarefaction.pdf
+    Modified:   figs/plot_species_acumulation_area.pdf
+    Modified:   figs/plot_variables_elevation.pdf
+    Modified:   figs/plot_variables_elevation.png
+    Modified:   figs/plot_variables_elevation_allyears.pdf
+    Modified:   figs/plot_variables_elevation_allyears.png
+    Modified:   figs/predictors_den_div.pdf
+    Modified:   figs/predictors_den_div.png
+    Modified:   figs/predictors_rich.pdf
+    Modified:   glmulti.analysis.modgen.back
+    Modified:   glmulti.analysis.mods.back
+    Modified:   ms_mariposas_biodiversity.Rproj
+    Modified:   output/README.md
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -373,7 +498,11 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML
+(<code>docs/index.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -397,6 +526,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/3847382be6eb6d47d36e487f54daf9421991cbc6/analysis/index.Rmd" target="_blank">3847382</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-09-16
+</td>
+<td>
+wflow_publish("analysis/index.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/f99817834b4a8e5bed839535e3cfdaa774aeb696/analysis/index.Rmd" target="_blank">f998178</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-02-04
+</td>
+<td>
+update links
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_biodiversity/411e980a67171321347bec166f60f466c66267d1/docs/index.html" target="_blank">411e980</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-01-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -496,7 +676,7 @@ ajpelu
 2022-01-18
 </td>
 <td>
-wflow_publish(“analysis/index.Rmd”)
+wflow_publish("analysis/index.Rmd")
 </td>
 </tr>
 <tr>
@@ -530,7 +710,7 @@ ajpelu
 2022-01-18
 </td>
 <td>
-wflow_publish(“analysis/index.Rmd”)
+wflow_publish("analysis/index.Rmd")
 </td>
 </tr>
 <tr>
@@ -676,29 +856,50 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>Este repositorio contiene los datos y los análisis sobre biodiversidad de lepidopteros en Sierra Nevada (S Spain). Se trata de los análisis realizados para preparar el manuscrito titulado: <em>Butterfly diversity, richness and abundance patterns in Sierra Nevada (SE Spain): conservation implications under a global change scenario</em>.</p>
+<p>Este repositorio contiene los datos y los análisis sobre
+biodiversidad de lepidopteros en Sierra Nevada (S Spain). Se trata de
+los análisis realizados para preparar el manuscrito titulado:
+<em>Butterfly diversity, richness and abundance patterns in Sierra
+Nevada (SE Spain): conservation implications under a global change
+scenario</em>.</p>
 <div id="estructura-del-repositorio" class="section level2">
 <h2>Estructura del repositorio</h2>
 <ul>
-<li><p><a href="prepara_datos_mariposas.html">Prepara los datos de diversidad, abundancia y riqueza</a>.</p></li>
-<li><p><a href="plot_variables_elevation.html">Variación de riqueza, diversidad y abundancia con la elevación</a></p></li>
-<li><p><a href="tabla_descriptivos.html">Tabla de Descriptivos</a></p></li>
-<li><p><a href="prepara_datos_ambientales.html">Prepara la matrix de datos ambientales</a></p></li>
+<li><p><a href="prepara_datos_mariposas.html">Prepara los datos de
+diversidad, abundancia y riqueza</a></p></li>
+<li><p><a href="plot_variables_elevation.html">Variación de riqueza,
+diversidad y abundancia con la elevación</a></p></li>
+<li><p><a href="tabla_descriptivos.html">Tabla de
+Descriptivos</a></p></li>
+<li><p><a href="prepara_datos_ambientales.html">Prepara la matrix de
+datos ambientales</a></p></li>
 <li><p><a href="modeliza.html">Modelos</a></p></li>
-<li><p><a href="plots_descriptores.html">Gráficos descriptores modelos</a></p></li>
+<li><p><a href="plots_descriptores.html">Gráficos descriptores
+modelos</a></p></li>
+<li><p><a href="plots_correlations.html">Gráficos
+correlaciones</a></p></li>
 </ul>
 </div>
 <div id="otras-cosas" class="section level2">
 <h2>Otras cosas</h2>
 <ul>
-<li>Petición de JMBA sobre <a href="prepara_datos_mariposas_all_years.html">datos de diversidad, abundancia y riqueza de todo el periodo</a>. También se pueden ver los plots asociados a esos datos (<em>e.g.</em> Variación de riqueza, diversidad y abundancia con la elevación) <a href="plot_variables_elevation_all_years.html">aquí</a></li>
+<li>Petición de JMBA sobre <a
+href="prepara_datos_mariposas_all_years.html">datos de diversidad,
+abundancia y riqueza de todo el periodo</a>. También se pueden ver los
+plots asociados a esos datos (<em>e.g.</em> Variación de riqueza,
+diversidad y abundancia con la elevación) <a
+href="plot_variables_elevation_all_years.html">aquí</a></li>
 </ul>
 </div>
 <div id="autores" class="section level2">
 <h2>Autores</h2>
 <ul>
-<li><a href="https://github.com/ajpelu">Antonio J. Pérez-Luque</a> <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget"> <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a></li>
-<li>José Miguel Barea-Azcón <a href="https://orcid.org/0000-0001-8081-1513" target="orcid.widget"> <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a></li>
+<li><a href="https://github.com/ajpelu">Antonio J. Pérez-Luque</a>
+<a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a></li>
+<li>José Miguel Barea-Azcón
+<a href="https://orcid.org/0000-0001-8081-1513" target="orcid.widget">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a></li>
 </ul>
 </div>
 
