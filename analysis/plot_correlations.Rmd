@@ -1,0 +1,219 @@
+---
+title: "Plot correlations between variables"
+author: "Antonio J. Pérez-Luque"
+date: "2021-12-29"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE
+)
+```
+
+
+## Prepare data
+
+```{r}
+library(tidyverse)
+library(raster)
+library(fasterize)
+library(rgdal)
+library(ggpubr)
+library(ggstatsplot)
+library(here)
+library(statsExpressions)
+```
+
+```{r}
+den <- raster::raster(here::here("data/density.ovr"))
+riq <- raster::raster(here::here("data/richness.ovr"))
+div <- raster::raster(here::here("data/diversity_v2.ovr"))
+
+s <- stack(den, riq, div)
+
+df <- as.data.frame(s, xy=TRUE) %>% 
+  filter(!is.na(density))
+```
+
+## Non-parametric
+```{r}
+cor_den_rich_np <- ggscatterstats(df, 
+               x = density, y = richness, 
+               marginal = FALSE, 
+               type = "parametric", 
+               point.args = list(fill="gray", alpha = 0.8),
+               smooth.line.args = 
+                 list(method = "gam", formula = y ~ s(x, bs = "cs"),
+                      color = "blue"))
+cor_den_rich_np
+```
+
+```{r}
+cor_den_div_np <- ggscatterstats(df, 
+               x = density, y = diversity_v2, 
+               marginal = FALSE, 
+               type = "nonparametric",
+               point.args = list(fill="gray", alpha = 0.2),
+               smooth.line.args = 
+                 list(method = "gam", formula = y ~ s(x, bs = "cs"),
+                      color = "blue"))
+cor_den_div_np
+```
+
+```{r}
+cor_div_ric_np <-  ggscatterstats(df, 
+                               y = richness, x = diversity_v2, 
+                               marginal = FALSE, 
+                               type = "nonparametric",
+                               point.args = list(fill="gray", alpha = 0.2),
+                               smooth.line.args = 
+                                 list(method = "gam", formula = y ~ s(x, bs = "cs"),
+                                      color = "blue"))
+cor_div_ric_np
+```
+
+
+```{r}
+ggsave(
+  filename = "figs/cor_den_rich_np.png",
+  plot = cor_den_rich_np,
+  width = 8,
+  height = 8,
+  device = "png"
+)
+
+ggsave(
+  filename = "figs/cor_den_div_np.png",
+  plot = cor_den_div_np,
+  width = 8,
+  height = 8,
+  device = "png"
+)
+
+ggsave(
+  filename = "figs/cor_div_ric_np.png",
+  plot = cor_div_ric_np,
+  width = 8,
+  height = 8,
+  device = "png"
+)
+```
+
+
+
+## Parametric 
+
+```{r}
+mylabel <- c(
+  den = "Abundance (n ind / 100 m)",
+  div = "Diversity (Shannon index)",
+  riq = "Richness (species number)")
+
+```
+
+
+```{r}
+ct <- corr_test(df, x = density, y = richness, type = "parametric")
+
+cor_den_rich_p <- ggplot(df, aes(x=density, y=richness)) + 
+  geom_point(col="gray", size=.3, alpha=.2) + 
+  theme_minimal() + 
+  geom_smooth(method = "gam", 
+              formula = y ~ s(x, bs = "cs"),
+              color = "blue", 
+              size =.5) + 
+  labs(subtitle = ggplot2::expr(paste(
+    widehat(italic("r"))["Pearson"], "=0.727, ", italic("p"), "<", "0.001")),
+    x = mylabel["den"], 
+    y = mylabel["riq"])
+
+cor_den_rich_p
+```
+
+
+```{r}
+ct <- corr_test(df, x = density, y = diversity_v2, type = "parametric")
+
+cor_den_div_p <- ggplot(df, aes(x = density, y = diversity_v2)) + 
+  geom_point(col="gray", size=.3, alpha=0.2) + 
+  theme_minimal() + 
+  geom_smooth(method = "gam", 
+              formula = y ~ s(x, bs = "cs"),
+              color = "blue", 
+              size =.5) + 
+  labs(subtitle = ggplot2::expr(paste(
+    widehat(italic("r"))["Pearson"], "=0.773, ", italic("p"), "<", "0.001")),
+    x = mylabel["den"], 
+    y = mylabel["div"])
+cor_den_div_p
+```
+
+```{r}
+ct <- corr_test(df, x = diversity_v2, y = richness, type = "parametric")
+
+cor_div_ric_p <- ggplot(df, aes(x = diversity_v2, y = richness)) + 
+  geom_point(col="gray", size=.3, alpha=0.2) + 
+  theme_minimal() + 
+  geom_smooth(method = "gam", 
+              formula = y ~ s(x, bs = "cs"),
+              color = "blue", 
+              size =.5) + 
+  labs(subtitle = ggplot2::expr(paste(
+    widehat(italic("r"))["Pearson"], "=0.673, ", italic("p"), "<", "0.001")),
+    x = mylabel["div"],
+    y = mylabel["riq"])
+
+cor_div_ric_p
+```
+
+
+
+```{r}
+ggsave(
+  filename = "figs/cor_den_rich_p.png",
+  plot = cor_den_rich_p,
+  width = 8,
+  height = 8,
+  device = "png"
+)
+
+ggsave(
+  filename = "figs/cor_den_div_p.png",
+  plot = cor_den_div_p,
+  width = 8,
+  height = 8,
+  device = "png"
+)
+
+ggsave(
+  filename = "figs/cor_div_ric_p.png",
+  plot = cor_div_ric_p,
+  width = 8,
+  height = 8,
+  device = "png"
+)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
