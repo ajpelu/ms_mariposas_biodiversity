@@ -8,7 +8,8 @@ editor_options:
   chunk_output_type: console
 ---
 
-Este repositorio contiene los datos y los análisis sobre biodiversidad de lepidopteros en Sierra Nevada (S Spain). Se trata de los análisis realizados para preparar el manuscrito titulado: *Butterfly diversity, richness and abundance patterns in Sierra Nevada (SE Spain): conservation implications under a global change scenario*. 
+Este repositorio contiene los datos y los análisis sobre biodiversidad de lepidopteros en Sierra Nevada (S Spain). Se trata de los análisis realizados en el trabajo: *Butterfly diversity, richness, and density patterns in Sierra Nevada ( SE Spain): Conservation implications under a global change scenario*, que finalmente se ha publicado en la revista Insect Conservation and Diversity. Aquí está el [paper publicado](https://doi.org/10.1111/icad.12617) 
+
 
 ## Estructura del repositorio
 
@@ -29,9 +30,16 @@ Este repositorio contiene los datos y los análisis sobre biodiversidad de lepid
 ## Otras cosas
 * Petición de JMBA sobre [datos de diversidad, abundancia y riqueza de todo el periodo](prepara_datos_mariposas_all_years.html). También se pueden ver los plots asociados a esos datos (*e.g.* Variación de riqueza, diversidad y abundancia con la elevación) [aquí](plot_variables_elevation_all_years.html)
 
-## Autores
+## Autores ^[Autores del repositorio]
 
 - [Antonio J. Pérez-Luque](https://github.com/ajpelu) <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
 - José Miguel Barea-Azcón <a href="https://orcid.org/0000-0001-8081-1513" target="orcid.widget">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
+
+## Como citar
+- **Paper**: 
+Barea‐Azcón, J.M., Pérez‐Luque, A.J., Olivares, F.J., Guerrero, M., Galiana‐García, M., Chaves, M.D., Olvera, M., Munguira, M.L., 2022. Butterfly diversity, richness, and density patterns in Sierra Nevada ( SE Spain): Conservation implications under a global change scenario. Insect Conserv Diversity: icad.12617. https://doi.org/10.1111/icad.12617
+
+- **Repositorio**
+Pérez-Luque, A. J., & Barea-Azcón, J. M. (2022). Analysis of "Butterfly diversity, richness and abundance patterns in Sierra Nevada" (Version 1.1) [Computer software]. https://ajpelu.github.io/ms_mariposas_biodiversity/
