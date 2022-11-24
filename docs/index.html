@@ -13,8 +13,8 @@
 
 <title>Home</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
-<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -153,11 +153,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -186,8 +190,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -195,16 +199,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -313,7 +310,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-16
+<strong>Last updated:</strong> 2022-11-24
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -360,15 +357,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytreee881b33ad2c2db0cd42e7fa529f9f9c7dc93c2eatargetblanke881b33a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree30df45114947848bbb1dc0f860e588245f7d69a7targetblank30df451a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/e881b33ad2c2db0cd42e7fa529f9f9c7dc93c2ea" target="_blank">e881b33</a>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/30df45114947848bbb1dc0f860e588245f7d69a7" target="_blank">30df451</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytreee881b33ad2c2db0cd42e7fa529f9f9c7dc93c2eatargetblanke881b33a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasbiodiversitytree30df45114947848bbb1dc0f860e588245f7d69a7targetblank30df451a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -378,7 +375,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/e881b33ad2c2db0cd42e7fa529f9f9c7dc93c2ea" target="_blank">e881b33</a>.
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/tree/30df45114947848bbb1dc0f860e588245f7d69a7" target="_blank">30df451</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -395,7 +392,12 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    data/.DS_Store
+
+Untracked files:
+    Untracked:  .Rbuildignore
+
+Unstaged changes:
+    Modified:   README.md
 
 </code></pre>
 <p>
@@ -440,6 +442,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_biodiversity/blob/30df45114947848bbb1dc0f860e588245f7d69a7/analysis/index.Rmd" target="_blank">30df451</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-11-24
+</td>
+<td>
+update index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_biodiversity/b5f940739c3d1c26a213f3091f36a6f40c99d0cc/docs/index.html" target="_blank">b5f9407</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2022-09-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -806,10 +842,12 @@ Start workflowr project.
 </div>
 <p>Este repositorio contiene los datos y los análisis sobre
 biodiversidad de lepidopteros en Sierra Nevada (S Spain). Se trata de
-los análisis realizados para preparar el manuscrito titulado:
-<em>Butterfly diversity, richness and abundance patterns in Sierra
-Nevada (SE Spain): conservation implications under a global change
-scenario</em>.</p>
+los análisis realizados en el trabajo: <em>Butterfly diversity,
+richness, and density patterns in Sierra Nevada ( SE Spain):
+Conservation implications under a global change scenario</em>, que
+finalmente se ha publicado en la revista Insect Conservation and
+Diversity. Aquí está el <a
+href="https://doi.org/10.1111/icad.12617">paper publicado</a></p>
 <div id="estructura-del-repositorio" class="section level2">
 <h2>Estructura del repositorio</h2>
 <ul>
@@ -840,7 +878,8 @@ href="plot_variables_elevation_all_years.html">aquí</a></li>
 </ul>
 </div>
 <div id="autores" class="section level2">
-<h2>Autores</h2>
+<h2>Autores <a href="#fn1" class="footnote-ref"
+id="fnref1"><sup>1</sup></a></h2>
 <ul>
 <li><a href="https://github.com/ajpelu">Antonio J. Pérez-Luque</a>
 <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
@@ -849,6 +888,30 @@ href="plot_variables_elevation_all_years.html">aquí</a></li>
 <a href="https://orcid.org/0000-0001-8081-1513" target="orcid.widget">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a></li>
 </ul>
+</div>
+<div id="como-citar" class="section level2">
+<h2>Como citar</h2>
+<ul>
+<li><p><strong>Paper</strong>: Barea‐Azcón, J.M., Pérez‐Luque, A.J.,
+Olivares, F.J., Guerrero, M., Galiana‐García, M., Chaves, M.D., Olvera,
+M., Munguira, M.L., 2022. Butterfly diversity, richness, and density
+patterns in Sierra Nevada ( SE Spain): Conservation implications under a
+global change scenario. Insect Conserv Diversity: icad.12617. <a
+href="https://doi.org/10.1111/icad.12617"
+class="uri">https://doi.org/10.1111/icad.12617</a></p></li>
+<li><p><strong>Repositorio</strong> Pérez-Luque, A. J., &amp;
+Barea-Azcón, J. M. (2022). Analysis of “Butterfly diversity, richness
+and abundance patterns in Sierra Nevada” (Version 1.1) [Computer
+software]. <a href="https://ajpelu.github.io/ms_mariposas_biodiversity/"
+class="uri">https://ajpelu.github.io/ms_mariposas_biodiversity/</a></p></li>
+</ul>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>Autores del repositorio<a href="#fnref1"
+class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
 
 
