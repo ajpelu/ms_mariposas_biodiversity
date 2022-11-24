@@ -15,8 +15,7 @@ Data used for the analysis and for the paper are available at GBIF:
 
 - Barea-Azcón J M (2021): Dataset of butterfly monitoring in Sierra Nevada (Spain). v1.2. Sierra Nevada Global Change Observatory. Andalusian Environmental Center, University of Granada, Regional Government of Andalusia. Dataset/Samplingevent. https://doi.org/10.15470/tc3gdq 
 
-## Authors ^[Repo author and contributors]
-
+## Authors
 - [Antonio J. Pérez-Luque](https://github.com/ajpelu) <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a> (role: creator)
 - José Miguel Barea-Azcón <a href="https://orcid.org/0000-0001-8081-1513" target="orcid.widget">
