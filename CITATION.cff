@@ -33,7 +33,7 @@ abstract: >
   In this repository, we aim to analyze the patterns
   of diversity, richness, and abundance of diurnal
   butterflies in the Sierra Nevada mountain region
-  (SE Spain). 
+  (SE Spain).
 keywords:
   - Butterflies
   - Sierra Nevada mountain region (Spain)
@@ -42,4 +42,4 @@ keywords:
   - elevational gradient
 license: CC-BY-SA-4.0
 version: '1.1'
-date-released: '2021-12-30'
+date-released: '2022-01-10'
