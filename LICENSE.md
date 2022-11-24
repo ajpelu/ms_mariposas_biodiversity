@@ -1,14 +1,3 @@
----
-title: "License"
-output:
-  workflowr::wflow_html:
-    toc: false
-editor_options:
-  chunk_output_type: console
----
-
-See the [MIT licence file](LICENSE.md)
-
 # MIT License
 
 Copyright (c) 2022 Pérez-Luque, A. J., & Barea-Azcón, J. M. (2022). Analysis of "Butterfly diversity, richness and abundance patterns in Sierra Nevada" (Version 1.1) [Computer software]. https://ajpelu.github.io/ms_mariposas_biodiversity/
